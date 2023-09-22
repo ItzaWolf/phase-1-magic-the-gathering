@@ -3,7 +3,10 @@ body {
     color: white;
     font-family: 'Bebas Neue', cursive;
 }
-
+#top {
+    text-align: center;
+    font-family: 'Nanum Gothic', sans-serif;
+}
 #decks {
     margin: 20px 0px 20px 0px;
     height: fit-content;
@@ -25,6 +28,12 @@ body {
     height: 25;
     width: 50%;
     float: right;
+}
+#hover-info h2{
+    font-family: 'Nanum Gothic', sans-serif;
+}
+#decks p:hover {
+    filter: drop-shadow(0 0 0.75rem white)
 }
 .logo {
     margin: 20px 0px 20px 0px;
@@ -68,22 +77,13 @@ body {
 #movie-info div p {
     font-family: 'Nanum Gothic', sans-serif;
 }
-
+/* Search form size css */
 form {
     width:200px;
 }
 
-button {
-    border: 0;
-    width:200px;
-    color: black;
-    background: white; 
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: 'Bebas Neue', cursive;
-}
 
+/* Search field css */
 input[type=text] {
     display:inline-block;
     border: 0;
@@ -97,6 +97,7 @@ input[type=text] {
     box-sizing: border-box;
 }
 
+/* Search button css */
 input[type=submit] {
     display:inline-block;
     border: 0;
