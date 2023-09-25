@@ -1,7 +1,9 @@
 body {
     background-color: black;
     color: white;
-    font-family: 'Bebas Neue', cursive;
+    font-size: large;
+    font-family: 'Papyrus', fantasy;
+    font-weight: bold;
 }
 
 #top {
@@ -33,6 +35,7 @@ body {
 .eachCardDiv {
     display: flex;
     flex-direction: row;
+    gap: 5px;
 }
 
 .vl {
@@ -73,41 +76,28 @@ body {
     float: left;
 }
 
-#movie-list {
-    display: flex;
-    justify-content: center;
-}
-
-#movie-list img {
-    width: 100px;
+#detail-image {
+    width: 300px;
     height: auto;
-    margin: 7px;
 }
 
-#movie-list img:hover {
-    filter: drop-shadow(0 0 0.75rem white);
+#Card-info {
+    text-align: center;
+    font-size: 25px;
+    height: 50px;
 }
 
-#movie-info {
+#hover-info {
     display: flex;
-    height: 400px;
-    justify-content: center;
-    margin-top: 25px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#hover-card-name {
+    text-align: right;
 }
 
-#movie-info img {
-    height: auto;
-    margin: 7px;
-    filter: drop-shadow(0 0 1em #c93642);
-}
-
-#movie-info div {
-    width: 500px;
-    margin-left: 20px;
-}
-
-#movie-info div p {
-    font-family: 'Nanum Gothic', sans-serif;
+#hover-card-info {
+    text-align: right;
 }
 
 /* Search form size CSS */

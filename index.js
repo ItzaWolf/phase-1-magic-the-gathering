@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // });
 })
 
+
 let globalDeck
 let listDiv = document.querySelector("#list-div")
 let globalCard
@@ -33,7 +34,7 @@ function renderList(deckCards){
     newCardName = document.createElement("p")
     newCardAmmount = document.createElement("p")
     newCardName.textContent = deckCards.cardName
-    newCardAmmount.textContent = deckCards.cardQuantity
+    newCardAmmount.textContent = `${deckCards.cardQuantity}      `
     newCardDiv.className = "eachCardDiv"
     newCardDiv.append(newCardAmmount, newCardName)
     listDiv.append(newCardDiv)
