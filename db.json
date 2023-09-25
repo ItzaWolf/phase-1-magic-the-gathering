@@ -57,23 +57,28 @@
             "id": 1,
             "cardName": "card1",
             "scryfallID": "IDHERE1",
-            "cardMama": "1",
+            "cardMana": "1",
             "cardType": "Creature",
-            "cardImage": ""
+            "cardRules": "RULES TEXT HERE",
+            "cardImage": "https://cards.scryfall.io/large/front/b/d/bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd.jpg?1614638838"
         },
         {
             "id": 2,
             "cardName": "card2",
             "scryfallID": "IDHERE2",
-            "cardMama": "2",
-            "cardType": "Instant"
+            "cardMana": "2",
+            "cardType": "Instant",
+            "cardRules": "RULES TEXT HERE",
+            "cardImage": "URLHERE"
         },
         {
             "id": 3,
             "cardName": "card3",
             "scryfallID": "IDHERE3",
-            "cardMama": "3",
-            "cardType": "Sorcery"
+            "cardMana": "3",
+            "cardType": "Sorcery",
+            "cardRules": "RULES TEXT HERE",
+            "cardImage": "URLHERE"
         }
     ]
 }

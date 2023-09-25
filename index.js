@@ -44,7 +44,14 @@ function renderList(deckCards){
 
 function updateHoverInfo(updatedID){
     console.log(updatedID)
+    console.log(updatedID["0"]["cardName"])
     hoverImage = document.querySelector("#detail-image")
+    hoverName = document.querySelector("#hover-card-name")
+    hoverInfo = document.querySelector("#hover-card-info")
+    hoverImage.src = updatedID["0"]["cardImage"]
+    hoverName.textContent = updatedID["0"]["cardName"]
+    hoverInfo.textContent = updatedID["0"]["cardRules"]
+
 }
 
 function handleFetchHoverInfo(inputID){
