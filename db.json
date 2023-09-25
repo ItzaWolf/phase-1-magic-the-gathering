@@ -1,0 +1,79 @@
+{
+    "decks":[
+        {
+        "id": 1,
+        "deckName": "deck1",
+        "deckType": "TestType",
+        "deckCards": [
+            {
+                "id": 1,
+                "cardName": "card1",
+                "cardQuantity": "1",
+                "scryfallID": "IDHERE1"
+            },
+            {
+                "id": 2,
+                "cardName": "card2",
+                "cardQuantity": "2",
+                "scryfallID": "IDHERE2"
+            },
+            {
+                "id": 3,
+                "cardName": "card3",
+                "cardQuantity": "3",
+                "scryfallID": "IDHERE3"
+            }
+            ]
+        },
+        {
+            "id": 1,
+            "deckName": "deck2",
+            "deckType": "TestType",
+            "deckCards": [
+                {
+                    "id": 1,
+                    "cardName": "card1",
+                    "cardQuantity": "1",
+                    "scryfallID": "IDHERE1"
+                },
+                {
+                    "id": 2,
+                    "cardName": "card2",
+                    "cardQuantity": "2",
+                    "scryfallID": "IDHERE2"
+                },
+                {
+                    "id": 3,
+                    "cardName": "card3",
+                    "cardQuantity": "3",
+                    "scryfallID": "IDHERE3"
+                }
+                ]
+            }
+
+    ],
+    "cards":[
+        {
+            "id": 1,
+            "cardName": "card1",
+            "scryfallID": "IDHERE1",
+            "cardMama": "1",
+            "cardType": "Creature",
+            "cardImage": ""
+        },
+        {
+            "id": 2,
+            "cardName": "card2",
+            "scryfallID": "IDHERE2",
+            "cardMama": "2",
+            "cardType": "Instant"
+        },
+        {
+            "id": 3,
+            "cardName": "card3",
+            "scryfallID": "IDHERE3",
+            "cardMama": "3",
+            "cardType": "Sorcery"
+        }
+    ]
+}

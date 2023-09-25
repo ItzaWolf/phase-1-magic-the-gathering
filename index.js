@@ -39,7 +39,7 @@ function renderList(deckCards){
     listDiv.append(newCardDiv)
     newCardName.addEventListener("mouseover", () => {
         handleFetchHoverInfo(deckCards.scryfallID)
-    })
+    });
 }
 
 function updateHoverInfo(updatedID){
@@ -56,6 +56,22 @@ function handleFetchHoverInfo(inputID){
         updateHoverInfo(updatedID)
     });
 }
+
+// function updateHoverInfo(inputID){
+//     console.log(inputID)
+//     console.log(handleFetchHoverInfo(inputID))
+//     hoverImage = document.querySelector("#detail-image")
+// }
+
+// function handleFetchHoverInfo(inputID){
+//     let updatedID
+//     fetch(`http://localhost:3000/cards`)
+//     .then(res => res.json())
+//     .then(res => {
+//         updatedID = res.filter((res) => res.scryfallID == inputID );
+//     });
+//     return updatedID
+// }
 
 // function callSryfall(){
 //     return fetch("https://api.scryfall.com/cards/autocomplete?q=thal")
