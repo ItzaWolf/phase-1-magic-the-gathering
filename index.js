@@ -5,16 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
         globalDeck = res["0"]
         res.forEach(renderDecks)
     });
-    // fetch("http://localhost:3000/decks")
-    // .then(res => res.json())
-    // .then(res =>{
-    //     globalCard= res["0"]
-    // });
 })
 
 let globalDeck
 let listDiv = document.querySelector("#list-div")
-let globalCard
 
 function renderDecks(deckContent){
     newDeckDiv = document.createElement("div")
@@ -32,14 +26,17 @@ function renderList(deckCards){
     newCardDiv = document.createElement("div")
     newCardName = document.createElement("p")
     newCardAmmount = document.createElement("p")
+    newCardDelete = document.createElement("btn")
     newCardName.textContent = deckCards.cardName
     newCardAmmount.textContent = deckCards.cardQuantity
+    newCardDelete.textContent = "x"
     newCardDiv.className = "eachCardDiv"
-    newCardDiv.append(newCardAmmount, newCardName)
+    newCardDiv.append(newCardAmmount, newCardName, newCardDelete)
     listDiv.append(newCardDiv)
     newCardName.addEventListener("mouseover", () => {
         handleFetchHoverInfo(deckCards.scryfallID)
     });
+    newCardDelete.addEventListener("click", (e) => handleDelete(e))
 }
 
 function updateHoverInfo(updatedID){
@@ -62,6 +59,41 @@ function handleFetchHoverInfo(inputID){
         updatedID = res.filter((res) => res.scryfallID == inputID );
         updateHoverInfo(updatedID)
     });
+}
+
+deckForm = document.querySelector("#addNewDeck")
+deckForm.addEventListener("submit", (e) => addDeck(e))
+
+function addDeck(e){
+    e.preventDefault()
+    indiDeck = document.createElement("div")
+    deckName = document.createElement("p")
+    deckDelete = document.createElement("btn")
+    deckName.textContent = e.target["deck-name-input"].value
+    deckDelete.textContent = "Delete"
+    decksDiv = document.querySelector("#decks")
+    indiDeck.className = "indiDeck"
+    indiDeck.append(deckName, deckDelete)
+    decksDiv.append(indiDeck)
+    deckDelete.addEventListener("click", (e)=> handleDelete(e))
+    console.log("deck added")
+}
+
+function handleDelete(e){
+    if (confirm("Are you sure you want to delete this?") == true){
+        e.target.parentElement.remove()
+    } else{
+        console.log("Cancled")
+    }
+}
+
+quickAddForm = document.querySelector("#quick-add")
+quickAddForm.addEventListener("submit", (e)=> quickAdd(e))
+
+function quickAdd(e){
+    e.preventDefault()
+
+    console.log(e.target["search-db"].value)
 }
 
 // function updateHoverInfo(inputID){

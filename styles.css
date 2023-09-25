@@ -33,7 +33,7 @@ body {
 .eachCardDiv {
     display: flex;
     flex-direction: row;
-}
+}  
 
 .vl {
     height: 550px;
