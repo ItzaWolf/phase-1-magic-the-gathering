@@ -32,6 +32,9 @@ body {
 #hover-info h2{
     font-family: 'Nanum Gothic', sans-serif;
 }
+#list-div p:hover {
+    filter: drop-shadow(0 0 0.75rem white)
+}
 #decks p:hover {
     filter: drop-shadow(0 0 0.75rem white)
 }
