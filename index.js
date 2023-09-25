@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 })
 
+
 let globalDeck
 let listDiv = document.querySelector("#list-div")
 
