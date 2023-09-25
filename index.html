@@ -14,11 +14,11 @@
         </div>
         <hr/>
         <div id="deckName">
-        <label for="search-decks">Add New Deck</label>
-                <input id="search-db" type="text" placeholder="Deck Name..."/>
-                <input type="submit" value="Add New Deck"></button>
-                <hr/>
-            </div>
+            <label for="deck-name-input">Add New Deck</label>
+            <input id="deck-name-input" type="text" placeholder="Deck Name..."/>
+            <button type="submit">Add New Deck</button>
+            <hr/>
+        </div>
         <div id="decks">
             <p>Add New Deck:</p>
             <p>(Card Deck One)</p>
@@ -26,9 +26,11 @@
         <hr/>
 
         <div id="left-div">
-            <label for="search-decks">Quick Add to Deck</label>
+            <form id="quick-add">
+                <label for="search-db">Quick Add to Deck Selected</label>
                 <input id="search-db" type="text" placeholder="Card Name..."/>
-                <input type="submit" value="Submit"></button>
+                <button type="submit">Submit</button>
+            </form>
             <div id= "quickAdd">
                 <h3>Card Stash</h3>
             </div>
@@ -45,16 +47,14 @@
                     <h2 id="hover-card-name">Card Name</h2>
                     <p id="hover-card-info">Card Info</p>
                 </div>
-                
             </div>
-        <hr>
+            <hr>
             <div id="search-div">
                 <form id="search-cards">
-                    <label for="search-cards">Search Cards</label>
+                    <label for="search-scryfall">Search Cards</label>
                     <input id="search-scryfall" type="text" placeholder="Search..."/>
-                    <input type="submit" value="Search"></button>
+                    <button type="submit">Search</button>
                 </form>
-                
             </div>
             <hr>
             <div id="search-results">

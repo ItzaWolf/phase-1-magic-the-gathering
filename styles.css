@@ -3,41 +3,50 @@ body {
     color: white;
     font-family: 'Bebas Neue', cursive;
 }
+
 #top {
     text-align: center;
     font-family: 'Nanum Gothic', sans-serif;
 }
+
 #decks {
     margin: 20px 0px 20px 0px;
     height: fit-content;
     width: 100%;
 }
+
 #left-div {
     height: 25vh;
     width: 50%;
-    float: left
+    float: left;
 }
+
 .vl {
     height: 550px;
     position: absolute;
     left: 50%;
     margin-left: -3px;
     top: 1;
-  }
+}
+
 #right-div {
     height: 25;
     width: 50%;
     float: right;
 }
-#hover-info h2{
+
+#hover-info h2 {
     font-family: 'Nanum Gothic', sans-serif;
 }
+
 #list-div p:hover {
-    filter: drop-shadow(0 0 0.75rem white)
+    filter: drop-shadow(0 0 0.75rem white);
 }
+
 #decks p:hover {
-    filter: drop-shadow(0 0 0.75rem white)
+    filter: drop-shadow(0 0 0.75rem white);
 }
+
 .logo {
     margin: 20px 0px 20px 0px;
     width: 300px;
@@ -45,7 +54,7 @@ body {
 }
 
 #movie-list {
-    display:flex;
+    display: flex;
     justify-content: center;
 }
 
@@ -56,7 +65,7 @@ body {
 }
 
 #movie-list img:hover {
-    filter: drop-shadow(0 0 0.75rem white)
+    filter: drop-shadow(0 0 0.75rem white);
 }
 
 #movie-info {
@@ -69,7 +78,7 @@ body {
 #movie-info img {
     height: auto;
     margin: 7px;
-    filter: drop-shadow(0 0 1em #c93642)
+    filter: drop-shadow(0 0 1em #c93642);
 }
 
 #movie-info div {
@@ -80,33 +89,35 @@ body {
 #movie-info div p {
     font-family: 'Nanum Gothic', sans-serif;
 }
-/* Search form size css */
-form {
-    width:200px;
+
+/* Search form size CSS */
+#search-cards {
+    width: 200px;
 }
 
-
-/* Search field css */
-input[type=text] {
-    display:inline-block;
+/* Input and button CSS */
+input[type=text],
+button[type=submit] {
+    display: inline-block;
     border: 0;
-    width:100%;
+    width: 100%;
     color: black;
-    background: white; 
+    background: white;
     padding: 10px;
     border-radius: 5px;
     font-size: 20px;
     font-family: 'Bebas Neue', cursive;
     box-sizing: border-box;
+    margin-top: 10px;
 }
 
-/* Search button css */
-input[type=submit] {
-    display:inline-block;
+/* Button CSS */
+button[type=submit] {
+    display: inline-block;
     border: 0;
-    width:100%;
+    width: 100%;
     color: black;
-    background: white; 
+    background: white;
     padding: 10px;
     border-radius: 5px;
     font-size: 20px;
