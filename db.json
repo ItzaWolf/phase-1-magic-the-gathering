@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 {
     "decks":[
         {
@@ -9,19 +7,19 @@
         "deckCards": [
             {
                 "id": 1,
-                "cardName": "  card1",
+                "cardName": "card1",
                 "cardQuantity": "1",
                 "scryfallID": "IDHERE1"
             },
             {
                 "id": 2,
-                "cardName": "  card2",
+                "cardName": "card2",
                 "cardQuantity": "2",
                 "scryfallID": "IDHERE2"
             },
             {
                 "id": 3,
-                "cardName": "  card3",
+                "cardName": "card3",
                 "cardQuantity": "3",
                 "scryfallID": "IDHERE3"
             }
@@ -84,4 +82,3 @@
         }
     ]
 }
->>>>>>> Stashed changes
