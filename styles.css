@@ -17,8 +17,22 @@ body {
 
 #left-div {
     height: 25vh;
-    width: 50%;
+    width: 49%;
     float: left;
+}
+
+#quick-add {
+    width: 300px;
+}
+#addNewDeck {
+    display: block;
+    margin: 0 auto;
+    width: 1000px;
+}
+
+.eachCardDiv {
+    display: flex;
+    flex-direction: row;
 }
 
 .vl {
@@ -31,7 +45,7 @@ body {
 
 #right-div {
     height: 25;
-    width: 50%;
+    width: 49%;
     float: right;
 }
 
@@ -48,9 +62,15 @@ body {
 }
 
 .logo {
-    margin: 20px 0px 20px 0px;
     width: 300px;
     height: auto;
+    float: center;
+}
+
+.logo2 {
+    width: 150px;
+    height: auto;
+    float: left;
 }
 
 #movie-list {
