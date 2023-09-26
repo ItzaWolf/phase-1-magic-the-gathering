@@ -27,7 +27,7 @@ function renderDecks(deckContent){
     let newDeckDelete = document.createElement("btn")
     newDeckName.textContent = deckContent.deckName
     newDeckDiv.className = "eachDeckDiv"
-    newDeckDelete.textContent = "X"
+    newDeckDelete.textContent = "x"
     newDeckDiv.append(newDeckName, newDeckDelete)
     document.querySelector("#decks").append(newDeckDiv)
     newDeckName.addEventListener("click", async () => {
