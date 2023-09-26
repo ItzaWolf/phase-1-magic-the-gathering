@@ -1,14 +1,13 @@
 body {
     background-color: black;
     color: white;
-    font-size: large;
+    font-size: larger;
     font-family: 'Papyrus', fantasy;
     font-weight: bold;
 }
 
 #top {
     text-align: center;
-    font-family: 'Nanum Gothic', sans-serif;
 }
 
 #decks {
