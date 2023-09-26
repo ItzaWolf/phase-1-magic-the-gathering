@@ -1,4 +1,4 @@
-//WORK ON THE RELATIONAL DB
+//TODO: On Deck Delete, Set Global Deck to a different deck
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch("http://localhost:3000/decks")
@@ -7,13 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
         globalDeck = res["0"]
         res.forEach(renderDecks)
     });
+    fetchAllCardNames()
+    fetchGlobalCurrentDeckCards()
 })
 
 let globalDeck
+let allCards
 let listDiv = document.querySelector("#list-div")
+let globalCurrentDeckCards
 
 
-//async functions solution
+//relational Database Function -- async function solution
 async function fetchDeckCardsByDeckID(deckID){
     let response = await fetch("http://localhost:3000/deckCards")
     let data = await response.json();
@@ -135,6 +139,7 @@ async function handleDeckDelete(deckID, e){
         deckCardsJSON.forEach((id)=> handleDeckContentsDelete(id))
         if(globalDeck.id == deckID){
             listDiv.textContent = ""
+
         }
     } else{
         console.log("Cancled")
@@ -211,3 +216,79 @@ function updateQuantiy(deckCardsID, inputValue){
     .then(console.log)
 }
 
+//API Interaction
+//Fetches All Card Names
+function fetchAllCardNames(){
+    setTimeout(()=>{
+        fetch('https://api.scryfall.com/catalog/card-names')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            allCards = data
+        })
+    }, 100)
+}
+
+
+function fetchGlobalCurrentDeckCards(){
+    fetch('http://localhost:3000/deckCards')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        globalCurrentDeckCards = data
+    })
+}
+
+// function fetchIndiCardScryfall(){
+//     fetch('https://api.scryfall.com/cards/named?fuzzy=com+aust')
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log(data)
+//         allCards = data
+//     })
+// }
+
+// fetchIndiCardScryfall()
+
+function fetchFuzyIndiCardScryfall(cardName){
+    let inputName = cardName.replace(/\s/g, '+')
+    return fetch(`https://api.scryfall.com/cards/named?fuzzy=${inputName}`)
+    .then(response => response.json())
+    .then(console.log)
+}
+
+fetchFuzyIndiCardScryfall("Ashi Adept")
+
+
+function fetchAuotcomplete(input){
+    return fetch(`https://api.scryfall.com/cards/autocomplete?q=${input}`)
+    .then(response => response.json())
+    .then(console.log)
+}
+
+// function fetchAuotcomplete(input){
+//     setTimeout(()=>{
+//         return fetch(`https://api.scryfall.com/cards/autocomplete?q=${input}`)
+//         .then(response => response.json())
+//         .then(console.log)
+//     }, 100)
+// }
+
+fetchAuotcomplete("Ashiok")
+
+// function checkIfSolo(inputArray){
+//     if(inputArray.length === 1){
+//        //Excecute function 
+//     }
+//     else if(inputArray.length >= 2){
+//         alert("The value you entered has multiple results.")
+//     }
+//     else{
+//         alert("The value you inputed has no matching resuts.")
+//     }
+// }
+
+// function updateSearches(){
+// }
+
+//Compare Input to All Card Names
