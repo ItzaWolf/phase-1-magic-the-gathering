@@ -3,52 +3,12 @@
     {
       "id": 1,
       "deckName": "deck1",
-      "deckType": "TestType",
-      "deckCards": [
-        {
-          "id": 1,
-          "cardName": "card1",
-          "cardQuantity": "1",
-          "scryfallID": "IDHERE1"
-        },
-        {
-          "id": 2,
-          "cardName": "card2",
-          "cardQuantity": "2",
-          "scryfallID": "IDHERE2"
-        },
-        {
-          "id": 3,
-          "cardName": "card3",
-          "cardQuantity": "3",
-          "scryfallID": "IDHERE3"
-        }
-      ]
+      "deckType": "TestType"
     },
     {
       "id": 2,
       "deckName": "deck2",
-      "deckType": "TestType",
-      "deckCards": [
-        {
-          "id": 1,
-          "cardName": "card1",
-          "cardQuantity": "1",
-          "scryfallID": "IDHERE1"
-        },
-        {
-          "id": 2,
-          "cardName": "card2",
-          "cardQuantity": "2",
-          "scryfallID": "IDHERE2"
-        },
-        {
-          "id": 3,
-          "cardName": "card3",
-          "cardQuantity": "3",
-          "scryfallID": "IDHERE3"
-        }
-      ]
+      "deckType": "TestType"
     }
   ],
   "cards": [
@@ -78,6 +38,29 @@
       "cardType": "Sorcery",
       "cardRules": "RULES TEXT HERE",
       "cardImage": "URLHERE"
+    }
+  ],
+  "deckCards": [
+    {
+      "deck_id": 1,
+      "id": 1,
+      "cardName": "card1",
+      "cardQuantity": "1",
+      "scryfallID": "IDHERE1"
+    },
+    {
+      "deck_id": 1,
+      "id": 2,
+      "cardName": "card2",
+      "cardQuantity": "2",
+      "scryfallID": "IDHERE2"
+    },
+    {
+      "deck_id": 2,
+      "id": 3,
+      "cardName": "Please?",
+      "cardQuantity": "1",
+      "scryfallID": "IDHERE1"
     }
   ]
 }

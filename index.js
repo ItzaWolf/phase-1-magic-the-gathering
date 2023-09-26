@@ -1,3 +1,5 @@
+//WORK ON THE RELATIONAL DB
+
 document.addEventListener('DOMContentLoaded', () => {
     fetch("http://localhost:3000/decks")
     .then(res => res.json())
@@ -7,51 +9,146 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 })
 
-
 let globalDeck
 let listDiv = document.querySelector("#list-div")
 
+
+//async functions solution
+async function fetchDeckCardsByDeckID(deckID){
+    let response = await fetch("http://localhost:3000/deckCards")
+    let data = await response.json();
+    const deckCardsJSON = data.filter(item => item.deck_id == deckID);
+    return deckCardsJSON
+}
+
+// console.log(fetchDeckCardsByDeckID("1"))
+
+//cleaned up attempt using.filter
+// function fetchDeckCardsByDeckID(deckID){
+//     let deckCardsJSON
+//     fetch("http://localhost:3000/deckCards")
+//     .then(res => res.json())
+//     .then(res => {
+//         deckCardsJSON = res.filter((res) => res.deck_id == deckID);
+//         return deckCardsJSON
+//         })
+// }
+
+    //attempt using .filter
+    // function handleFetchDeckCardsByDeckID(deckID){
+    //     // const deckList = [];
+    //     console.log(deckID)
+    //     let decksJSON
+    //     let deckCardsJSON
+    //     // fetch("http://localhost:3000/decks")
+    //     // .then(res => res.json())
+    //     // .then(res => res)
+    //     fetch("http://localhost:3000/deckCards")
+    //     .then(res => res.json())
+    //     .then(res => {
+    //         deckCardsJSON = res
+    //         deckCardsJSON = res.filter((res) => res.deck_id == deckID );
+    //         console.log(deckCardsJSON)
+    //         // updatedID = res.filter((res) => res.scryfallID == inputID );
+    //         // updateHoverInfo(updatedID)
+    //         })
+    // }
+
+    //attempt using fetches outside of original function:: getting async errors
+    // function handleFetchDeckCardsByDeckID(){
+    //     let decksJSON
+    //     let deckCardsJSON
+    //     fetch("http://localhost:3000/decks")
+    //     .then(res => res.json())
+    //     .then(res => decksJSON = res)
+    //     fetch("http://localhost:3000/deckCards")
+    //     .then(res => res.json())
+    //     .then(res => deckCardsJSON = res)
+    // }
+
+    //1st attempt baed off of example given by chatGPT
+    // function fetchDeckCardsByDeckID(decksID){
+        // const deckList = [];
+        // let decksJSON
+        // let deckCardsJSON
+        // fetch("http://localhost:3000/decks")
+        // .then(res => res.json())
+        // .then(res => decksJSON = res)
+        // fetch("http://localhost:3000/deckCards")
+        // .then(res => res.json())
+        // .then(res => deckCardsJSON = res)
+        // console.log(decksJSON)
+        // console.log(deckCardsJSON)
+            // for (const cards of deckCardsJSON) {
+            //     if (cards.deck_id === deckID) {
+            //       // Find the user information for the post's user_id
+            //       const user = decksJSON.find((deck) => deck.id === deckID);
+            //       if (user) {
+            //         deckList.push({
+            //           cards,
+            //           decks
+            //         });
+            //       }
+            //     }
+            //   }
+            //   return deckList;
+            // }
+
+    //example given by chatGPT
+    // function fetchPostsByUserId(userId) {
+    //   const userPosts = [];
+    //     for (const post of jsonData.posts) {
+    //         if (post.user_id === userId) {
+    //           // Find the user information for the post's user_id
+    //           const user = jsonData.users.find((user) => user.id === userId);
+    //           if (user) {
+    //             userPosts.push({
+    //               post,
+    //               user
+    //             });
+    //           }
+    //         }
+    //       }
+        
+    //       return userPosts;
+    //     }
+
 function renderDecks(deckContent){
-    newDeckDiv = document.createElement("div")
-    newDeckName = document.createElement("p")
+    let newDeckDiv = document.createElement("div")
+    let newDeckName = document.createElement("p")
+    let newDeckDelete = document.createElement("btn")
     newDeckName.textContent = deckContent.deckName
     newDeckDiv.className = "eachDeckDiv"
-    newDeckDiv.append(newDeckName)
+    newDeckDelete.textContent = "X"
+    newDeckDiv.append(newDeckName, newDeckDelete)
     document.querySelector("#decks").append(newDeckDiv)
-    newDeckName.addEventListener("click", () => {
+    newDeckName.addEventListener("click", async () => {
         listDiv.textContent = ""
         globalDeck = deckContent
-        deckContent.deckCards.forEach(renderList)
+        console.log(deckContent.id)
+        //change the for each to itterate through 
+        let deckCards = await fetchDeckCardsByDeckID(deckContent.id)
+        deckCards.forEach(renderList)
     })
+    newDeckDelete.addEventListener("click", (e)=> handleDeckDelete(deckContent.id, e))
 }
 
 function renderList(deckCards){
-    newCardDiv = document.createElement("div")
-    newCardName = document.createElement("p")
-    newCardAmmount = document.createElement("p")
-    newCardDelete = document.createElement("btn")
+    let newCardDiv = document.createElement("div")
+    let newCardName = document.createElement("p")
+    let newCardAmmount = document.createElement("a")
+    let newCardDelete = document.createElement("btn")
     newCardName.textContent = deckCards.cardName
     newCardAmmount.textContent = deckCards.cardQuantity
     newCardDelete.textContent = "x"
     newCardDiv.className = "eachCardDiv"
+    newCardName.className = "eachCardName"
     newCardDiv.append(newCardAmmount, newCardName, newCardDelete)
     listDiv.append(newCardDiv)
     newCardName.addEventListener("mouseover", () => {
         handleFetchHoverInfo(deckCards.scryfallID)
     });
-    newCardDelete.addEventListener("click", (e) => handleDelete(e))
-}
-
-function updateHoverInfo(updatedID){
-    console.log(updatedID)
-    console.log(updatedID["0"]["cardName"])
-    hoverImage = document.querySelector("#detail-image")
-    hoverName = document.querySelector("#hover-card-name")
-    hoverInfo = document.querySelector("#hover-card-info")
-    hoverImage.src = updatedID["0"]["cardImage"]
-    hoverName.textContent = updatedID["0"]["cardName"]
-    hoverInfo.textContent = updatedID["0"]["cardRules"]
-
+    newCardDelete.addEventListener("click", (e) => handleCardDelete(deckCards.id, e))
 }
 
 function handleFetchHoverInfo(inputID){
@@ -64,30 +161,80 @@ function handleFetchHoverInfo(inputID){
     });
 }
 
+function updateHoverInfo(updatedID){
+    console.log(updatedID)
+    console.log(updatedID["0"]["cardName"])
+    hoverImage = document.querySelector("#detail-image")
+    hoverName = document.querySelector("#hover-card-name")
+    hoverInfo = document.querySelector("#hover-card-info")
+    hoverImage.src = updatedID["0"]["cardImage"]
+    hoverName.textContent = updatedID["0"]["cardName"]
+    hoverInfo.textContent = updatedID["0"]["cardRules"]
+}
+
 deckForm = document.querySelector("#addNewDeck")
 deckForm.addEventListener("submit", (e) => addDeck(e))
 
 function addDeck(e){
     e.preventDefault()
-    indiDeck = document.createElement("div")
-    deckName = document.createElement("p")
-    deckDelete = document.createElement("btn")
-    deckName.textContent = e.target["deck-name-input"].value
-    deckDelete.textContent = "Delete"
-    decksDiv = document.querySelector("#decks")
-    indiDeck.className = "indiDeck"
-    indiDeck.append(deckName, deckDelete)
-    decksDiv.append(indiDeck)
-    deckDelete.addEventListener("click", (e)=> handleDelete(e))
-    console.log("deck added")
+    let newDeckObj = {
+        deckName: e.target["deck-name-input"].value,
+        deckType: "TestType"
+        }
+    console.log(newDeckObj)
+    renderDecks(newDeckObj)
+    if(e.target["deck-name-input"].value == null){
+        alert("Please enter a valid deck name")
+    } else{
+    fetch(`http://localhost:3000/decks`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(newDeckObj)
+        })
+    }
+    deckForm.reset()
 }
 
-function handleDelete(e){
-    if (confirm("Are you sure you want to delete this?") == true){
+function handleCardDelete(deckCardID, e){
+    if (confirm("Are you sure you want to delete this card?") == true){
         e.target.parentElement.remove()
+        fetch(`http://localhost:3000/deckCards/${deckCardID}`, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"},
+        })
+        .then(res => res.json())
     } else{
         console.log("Cancled")
     }
+}
+
+async function handleDeckDelete(deckID, e){
+    if (confirm("Are you sure you want to delete this deck?") == true){
+        e.target.parentElement.remove()
+        console.log(deckID)
+        fetch(`http://localhost:3000/decks/${deckID}`, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"},
+        })
+        .then(res => res.json())
+        let deckCardsJSON = await fetchDeckCardsByDeckID(deckID)
+        console.log(deckCardsJSON)
+        deckCardsJSON.forEach((id)=> handleDeckContentsDelete(id))
+        if(globalDeck.id == deckID){
+            listDiv.textContent = ""
+        }
+    } else{
+        console.log("Cancled")
+    }
+}
+
+function handleDeckContentsDelete(deckCardID){
+    console.log(deckCardID.id)
+    fetch(`http://localhost:3000/deckCards/${deckCardID.id}`, {
+        method: "DELETE",
+        headers: {"Content-Type": "application/json"},
+    })
+    .then(res => res.json())
 }
 
 quickAddForm = document.querySelector("#quick-add")
@@ -96,19 +243,24 @@ quickAddForm.addEventListener("submit", (e)=> quickAdd(e))
 function quickAdd(e){
     e.preventDefault()
     const newCard = {
+        deck_id: globalDeck.id,
         cardName: e.target["search-db"].value,
         cardQuantity: "1",
         scryfallID: "IDHERE1"
     }
-    globalDeck.deckCards.push(newCard)
-    fetch(`http://localhost:3000/decks/${globalDeck.id}`, {
-        method: "PATCH",
+    if(e.target["search-db"].value == null){
+        alert("Please enter a valid card.")
+    } else{
+    fetch(`http://localhost:3000/deckCards`, {
+        method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(globalDeck)
+        body: JSON.stringify(newCard)
     })
     .then(res => res.json())
-    .then(console.log)
-    // .then(res => renderDecks(res));
+    // .then(console.log)
+    renderList(newCard)
+    quickAddForm.reset()
+}
 }
 
 // function quickAdd(e){
