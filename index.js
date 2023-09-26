@@ -21,98 +21,6 @@ async function fetchDeckCardsByDeckID(deckID){
     return deckCardsJSON
 }
 
-// console.log(fetchDeckCardsByDeckID("1"))
-
-//cleaned up attempt using.filter
-// function fetchDeckCardsByDeckID(deckID){
-//     let deckCardsJSON
-//     fetch("http://localhost:3000/deckCards")
-//     .then(res => res.json())
-//     .then(res => {
-//         deckCardsJSON = res.filter((res) => res.deck_id == deckID);
-//         return deckCardsJSON
-//         })
-// }
-
-    //attempt using .filter
-    // function handleFetchDeckCardsByDeckID(deckID){
-    //     // const deckList = [];
-    //     console.log(deckID)
-    //     let decksJSON
-    //     let deckCardsJSON
-    //     // fetch("http://localhost:3000/decks")
-    //     // .then(res => res.json())
-    //     // .then(res => res)
-    //     fetch("http://localhost:3000/deckCards")
-    //     .then(res => res.json())
-    //     .then(res => {
-    //         deckCardsJSON = res
-    //         deckCardsJSON = res.filter((res) => res.deck_id == deckID );
-    //         console.log(deckCardsJSON)
-    //         // updatedID = res.filter((res) => res.scryfallID == inputID );
-    //         // updateHoverInfo(updatedID)
-    //         })
-    // }
-
-    //attempt using fetches outside of original function:: getting async errors
-    // function handleFetchDeckCardsByDeckID(){
-    //     let decksJSON
-    //     let deckCardsJSON
-    //     fetch("http://localhost:3000/decks")
-    //     .then(res => res.json())
-    //     .then(res => decksJSON = res)
-    //     fetch("http://localhost:3000/deckCards")
-    //     .then(res => res.json())
-    //     .then(res => deckCardsJSON = res)
-    // }
-
-    //1st attempt baed off of example given by chatGPT
-    // function fetchDeckCardsByDeckID(decksID){
-        // const deckList = [];
-        // let decksJSON
-        // let deckCardsJSON
-        // fetch("http://localhost:3000/decks")
-        // .then(res => res.json())
-        // .then(res => decksJSON = res)
-        // fetch("http://localhost:3000/deckCards")
-        // .then(res => res.json())
-        // .then(res => deckCardsJSON = res)
-        // console.log(decksJSON)
-        // console.log(deckCardsJSON)
-            // for (const cards of deckCardsJSON) {
-            //     if (cards.deck_id === deckID) {
-            //       // Find the user information for the post's user_id
-            //       const user = decksJSON.find((deck) => deck.id === deckID);
-            //       if (user) {
-            //         deckList.push({
-            //           cards,
-            //           decks
-            //         });
-            //       }
-            //     }
-            //   }
-            //   return deckList;
-            // }
-
-    //example given by chatGPT
-    // function fetchPostsByUserId(userId) {
-    //   const userPosts = [];
-    //     for (const post of jsonData.posts) {
-    //         if (post.user_id === userId) {
-    //           // Find the user information for the post's user_id
-    //           const user = jsonData.users.find((user) => user.id === userId);
-    //           if (user) {
-    //             userPosts.push({
-    //               post,
-    //               user
-    //             });
-    //           }
-    //         }
-    //       }
-        
-    //       return userPosts;
-    //     }
-
 function renderDecks(deckContent){
     let newDeckDiv = document.createElement("div")
     let newDeckName = document.createElement("p")
@@ -136,7 +44,7 @@ function renderDecks(deckContent){
 function renderList(deckCards){
     let newCardDiv = document.createElement("div")
     let newCardName = document.createElement("p")
-    let newCardAmmount = document.createElement("a")
+    let newCardAmmount = document.createElement("p")
     let newCardDelete = document.createElement("btn")
     newCardName.textContent = deckCards.cardName
     newCardAmmount.textContent = deckCards.cardQuantity
@@ -309,3 +217,94 @@ function quickAdd(e){
 // }
 
 // console.log(callSryfall())
+
+
+//cleaned up attempt using.filter
+// function fetchDeckCardsByDeckID(deckID){
+//     let deckCardsJSON
+//     fetch("http://localhost:3000/deckCards")
+//     .then(res => res.json())
+//     .then(res => {
+//         deckCardsJSON = res.filter((res) => res.deck_id == deckID);
+//         return deckCardsJSON
+//         })
+// }
+
+    //attempt using .filter
+    // function handleFetchDeckCardsByDeckID(deckID){
+    //     // const deckList = [];
+    //     console.log(deckID)
+    //     let decksJSON
+    //     let deckCardsJSON
+    //     // fetch("http://localhost:3000/decks")
+    //     // .then(res => res.json())
+    //     // .then(res => res)
+    //     fetch("http://localhost:3000/deckCards")
+    //     .then(res => res.json())
+    //     .then(res => {
+    //         deckCardsJSON = res
+    //         deckCardsJSON = res.filter((res) => res.deck_id == deckID );
+    //         console.log(deckCardsJSON)
+    //         // updatedID = res.filter((res) => res.scryfallID == inputID );
+    //         // updateHoverInfo(updatedID)
+    //         })
+    // }
+
+    //attempt using fetches outside of original function:: getting async errors
+    // function handleFetchDeckCardsByDeckID(){
+    //     let decksJSON
+    //     let deckCardsJSON
+    //     fetch("http://localhost:3000/decks")
+    //     .then(res => res.json())
+    //     .then(res => decksJSON = res)
+    //     fetch("http://localhost:3000/deckCards")
+    //     .then(res => res.json())
+    //     .then(res => deckCardsJSON = res)
+    // }
+
+    //1st attempt baed off of example given by chatGPT
+    // function fetchDeckCardsByDeckID(decksID){
+        // const deckList = [];
+        // let decksJSON
+        // let deckCardsJSON
+        // fetch("http://localhost:3000/decks")
+        // .then(res => res.json())
+        // .then(res => decksJSON = res)
+        // fetch("http://localhost:3000/deckCards")
+        // .then(res => res.json())
+        // .then(res => deckCardsJSON = res)
+        // console.log(decksJSON)
+        // console.log(deckCardsJSON)
+            // for (const cards of deckCardsJSON) {
+            //     if (cards.deck_id === deckID) {
+            //       // Find the user information for the post's user_id
+            //       const user = decksJSON.find((deck) => deck.id === deckID);
+            //       if (user) {
+            //         deckList.push({
+            //           cards,
+            //           decks
+            //         });
+            //       }
+            //     }
+            //   }
+            //   return deckList;
+            // }
+
+    //example given by chatGPT
+    // function fetchPostsByUserId(userId) {
+    //   const userPosts = [];
+    //     for (const post of jsonData.posts) {
+    //         if (post.user_id === userId) {
+    //           // Find the user information for the post's user_id
+    //           const user = jsonData.users.find((user) => user.id === userId);
+    //           if (user) {
+    //             userPosts.push({
+    //               post,
+    //               user
+    //             });
+    //           }
+    //         }
+    //       }
+        
+    //       return userPosts;
+    //     }
