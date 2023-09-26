@@ -1,87 +1,83 @@
-<<<<<<< Updated upstream
-=======
 {
-    "decks":[
+  "decks": [
+    {
+      "id": 1,
+      "deckName": "deck1",
+      "deckType": "TestType",
+      "deckCards": [
         {
-        "id": 1,
-        "deckName": "deck1",
-        "deckType": "TestType",
-        "deckCards": [
-            {
-                "id": 1,
-                "cardName": "  card1",
-                "cardQuantity": "1",
-                "scryfallID": "IDHERE1"
-            },
-            {
-                "id": 2,
-                "cardName": "  card2",
-                "cardQuantity": "2",
-                "scryfallID": "IDHERE2"
-            },
-            {
-                "id": 3,
-                "cardName": "  card3",
-                "cardQuantity": "3",
-                "scryfallID": "IDHERE3"
-            }
-            ]
+          "id": 1,
+          "cardName": "card1",
+          "cardQuantity": "1",
+          "scryfallID": "IDHERE1"
         },
         {
-            "id": 1,
-            "deckName": "deck2",
-            "deckType": "TestType",
-            "deckCards": [
-                {
-                    "id": 1,
-                    "cardName": "card1",
-                    "cardQuantity": "1",
-                    "scryfallID": "IDHERE1"
-                },
-                {
-                    "id": 2,
-                    "cardName": "card2",
-                    "cardQuantity": "2",
-                    "scryfallID": "IDHERE2"
-                },
-                {
-                    "id": 3,
-                    "cardName": "card3",
-                    "cardQuantity": "3",
-                    "scryfallID": "IDHERE3"
-                }
-                ]
-            }
-
-    ],
-    "cards":[
-        {
-            "id": 1,
-            "cardName": "card1",
-            "scryfallID": "IDHERE1",
-            "cardMana": "1",
-            "cardType": "Creature",
-            "cardRules": "RULES TEXT HERE",
-            "cardImage": "https://cards.scryfall.io/large/front/b/d/bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd.jpg?1614638838"
+          "id": 2,
+          "cardName": "card2",
+          "cardQuantity": "2",
+          "scryfallID": "IDHERE2"
         },
         {
-            "id": 2,
-            "cardName": "card2",
-            "scryfallID": "IDHERE2",
-            "cardMana": "2",
-            "cardType": "Instant",
-            "cardRules": "RULES TEXT HERE",
-            "cardImage": "URLHERE"
-        },
-        {
-            "id": 3,
-            "cardName": "card3",
-            "scryfallID": "IDHERE3",
-            "cardMana": "3",
-            "cardType": "Sorcery",
-            "cardRules": "RULES TEXT HERE",
-            "cardImage": "URLHERE"
+          "id": 3,
+          "cardName": "card3",
+          "cardQuantity": "3",
+          "scryfallID": "IDHERE3"
         }
-    ]
+      ]
+    },
+    {
+      "id": 2,
+      "deckName": "deck2",
+      "deckType": "TestType",
+      "deckCards": [
+        {
+          "id": 1,
+          "cardName": "card1",
+          "cardQuantity": "1",
+          "scryfallID": "IDHERE1"
+        },
+        {
+          "id": 2,
+          "cardName": "card2",
+          "cardQuantity": "2",
+          "scryfallID": "IDHERE2"
+        },
+        {
+          "id": 3,
+          "cardName": "card3",
+          "cardQuantity": "3",
+          "scryfallID": "IDHERE3"
+        }
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "id": 1,
+      "cardName": "card1",
+      "scryfallID": "IDHERE1",
+      "cardMana": "1",
+      "cardType": "Creature",
+      "cardRules": "RULES TEXT HERE",
+      "cardImage": "https://cards.scryfall.io/large/front/b/d/bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd.jpg?1614638838"
+    },
+    {
+      "id": 2,
+      "cardName": "card2",
+      "scryfallID": "IDHERE2",
+      "cardMana": "2",
+      "cardType": "Instant",
+      "cardRules": "RULES TEXT HERE",
+      "cardImage": "URLHERE"
+    },
+    {
+      "id": 3,
+      "cardName": "card3",
+      "scryfallID": "IDHERE3",
+      "cardMana": "3",
+      "cardType": "Sorcery",
+      "cardRules": "RULES TEXT HERE",
+      "cardImage": "URLHERE"
+    }
+  ]
 }
->>>>>>> Stashed changes
