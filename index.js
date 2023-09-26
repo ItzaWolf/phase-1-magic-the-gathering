@@ -44,19 +44,23 @@ function renderDecks(deckContent){
 function renderList(deckCards){
     let newCardDiv = document.createElement("div")
     let newCardName = document.createElement("p")
-    let newCardAmmount = document.createElement("p")
+    // let newCardDynamicAmmount = document.createElement("div")
+    let newCardAmount = document.createElement("p")
     let newCardDelete = document.createElement("btn")
     newCardName.textContent = deckCards.cardName
-    newCardAmmount.textContent = deckCards.cardQuantity
+    newCardAmount.textContent = deckCards.cardQuantity
     newCardDelete.textContent = "x"
     newCardDiv.className = "eachCardDiv"
     newCardName.className = "eachCardName"
-    newCardDiv.append(newCardAmmount, newCardName, newCardDelete)
+    newCardAmount.className = "eachCardAmount"
+    // newCardDynamicAmount.append(newCardAmount)
+    newCardDiv.append(newCardAmount, newCardName, newCardDelete)
     listDiv.append(newCardDiv)
     newCardName.addEventListener("mouseover", () => {
         handleFetchHoverInfo(deckCards.scryfallID)
     });
     newCardDelete.addEventListener("click", (e) => handleCardDelete(deckCards.id, e))
+    newCardAmount.addEventListener("click", (e) => handleChangeQuantity(deckCards, e))
 }
 
 function handleFetchHoverInfo(inputID){
@@ -168,8 +172,44 @@ function quickAdd(e){
     // .then(console.log)
     renderList(newCard)
     quickAddForm.reset()
+    }
 }
+
+function handleChangeQuantity(deckCards, e){
+    let eachCardAmount = e.target
+    let currentCardAmount = eachCardAmount.value
+    let inputNewCardAmount = document.createElement("input")
+    inputNewCardAmount.className = "eachCardAmountInput"
+    eachCardAmount.replaceWith(inputNewCardAmount)
+    console.log(deckCards)
+    inputNewCardAmount.addEventListener("keydown", (e)=>{
+        if (e.key === "Enter") {
+            if(inputNewCardAmount.value >= 0 && inputNewCardAmount.value <= 99){
+            currentCardAmount = inputNewCardAmount.value
+            inputNewCardAmount.replaceWith(eachCardAmount)
+            eachCardAmount.textContent = currentCardAmount
+            updateQuantiy(deckCards.id, inputNewCardAmount.value)
+            }
+            else{
+                alert("Enter a number between 1-99")
+            }
+        }
+    })
 }
+
+
+function updateQuantiy(deckCardsID, inputValue){
+    return fetch(`http://localhost:3000/deckCards/${deckCardsID}`, {
+        method: "PATCH",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            cardQuantity: inputValue
+        })
+    })
+    .then(res => res.json())
+    .then(console.log)
+}
+
 
 // function quickAdd(e){
 //     e.preventDefault()

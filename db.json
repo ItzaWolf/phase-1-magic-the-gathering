@@ -45,21 +45,21 @@
       "deck_id": 1,
       "id": 1,
       "cardName": "card1",
-      "cardQuantity": "1",
+      "cardQuantity": "2",
       "scryfallID": "IDHERE1"
     },
     {
       "deck_id": 1,
       "id": 2,
       "cardName": "card2",
-      "cardQuantity": "2",
+      "cardQuantity": "4",
       "scryfallID": "IDHERE2"
     },
     {
       "deck_id": 2,
       "id": 3,
       "cardName": "Please?",
-      "cardQuantity": "1",
+      "cardQuantity": "2",
       "scryfallID": "IDHERE1"
     }
   ]
