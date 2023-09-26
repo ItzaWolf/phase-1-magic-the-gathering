@@ -1,80 +1,63 @@
 {
   "decks": [
     {
-      "id": 1,
-      "deckName": "deck1",
-      "deckType": "TestType"
-    },
-    {
       "id": 2,
-      "deckName": "deck2",
+      "deckName": "The Best Deck Ever",
       "deckType": "TestType"
-    }
-  ],
-  "cards": [
-    {
-      "id": 1,
-      "cardName": "card1",
-      "scryfallID": "IDHERE1",
-      "cardMana": "1",
-      "cardType": "Creature",
-      "cardRules": "RULES TEXT HERE",
-      "cardImage": "https://cards.scryfall.io/large/front/b/d/bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd.jpg?1614638838"
-    },
-    {
-      "id": 2,
-      "cardName": "card2",
-      "scryfallID": "IDHERE2",
-      "cardMana": "2",
-      "cardType": "Instant",
-      "cardRules": "RULES TEXT HERE",
-      "cardImage": "URLHERE"
     },
     {
       "id": 3,
-      "cardName": "card3",
-      "scryfallID": "IDHERE3",
-      "cardMana": "3",
-      "cardType": "Sorcery",
-      "cardRules": "RULES TEXT HERE",
-      "cardImage": "URLHERE"
+      "deckName": "Deck 1",
+      "deckType": "TestType"
+    },
+    {
+      "id": 4,
+      "deckName": "UB shadow",
+      "deckType": "TestType"
     }
   ],
   "deckCards": [
     {
-      "deck_id": 1,
-      "id": 1,
-      "cardName": "card1",
-      "cardQuantity": "3",
-      "scryfallID": "IDHERE1"
+      "deck_id": 2,
+      "id": 8,
+      "cardName": "Didn't Say Please",
+      "cardQuantity": "1",
+      "scryfallID": "77500b53-0852-4d6a-bfe3-b1e8ef5a12cd"
     },
     {
-      "deck_id": 1,
-      "id": 2,
-      "cardName": "card2",
+      "deck_id": 2,
+      "id": 9,
+      "cardName": "Vikya, Scorching Stalwart",
       "cardQuantity": "4",
-      "scryfallID": "IDHERE2"
+      "scryfallID": "d65a3a8b-ebf8-4e51-8b57-5b14e5cb7abb"
     },
     {
-      "deck_id": 1,
-      "cardName": "Please?",
-      "cardQuantity": "1",
-      "scryfallID": "IDHERE1",
-      "id": 3
+      "deck_id": 3,
+      "id": 10,
+      "cardName": "Fireball",
+      "cardQuantity": "99",
+      "scryfallID": "df45a43e-a5b7-4fd4-873b-7b3c021be198"
     },
     {
-      "deck_id": 1,
-      "cardName": "hello",
+      "deck_id": 2,
+      "id": 11,
+      "cardName": "The Gitrog Monster",
       "cardQuantity": "1",
-      "scryfallID": "IDHERE1",
-      "id": 5
+      "scryfallID": "5790dd89-2be5-4a77-9450-2d3c1422bfc9"
     },
     {
-      "deck_id": 1,
-      "cardName": "Please?",
+      "deck_id": 4,
+      "id": 12,
+      "cardName": "Death's Shadow",
+      "cardQuantity": "4",
+      "scryfallID": "5526ff6e-c079-4ad4-ac8d-5e26ecacf50d"
+    },
+    {
+      "deck_id": 4,
+      "id": 13,
+      "cardName": "Asmoranomardicadaistinaculdacar",
       "cardQuantity": "1",
-      "scryfallID": "IDHERE1",
-      "id": 7
+      "scryfallID": "d99a9a7d-d9ca-4c11-80ab-e39d5943a315"
     }
   ]
 }

@@ -29,6 +29,7 @@ function renderDecks(deckContent){
     let newDeckDiv = document.createElement("div")
     let newDeckName = document.createElement("p")
     let newDeckDelete = document.createElement("btn")
+    let currentDeckName = document.querySelector("#current-deck-name")
     newDeckName.textContent = deckContent.deckName
     newDeckDiv.className = "eachDeckDiv"
     newDeckDelete.textContent = "x"
@@ -38,9 +39,9 @@ function renderDecks(deckContent){
     newDeckName.addEventListener("click", async () => {
         listDiv.textContent = ""
         globalDeck = deckContent
+        currentDeckName.textContent = deckContent.deckName
         console.log(deckContent.id)
         console.log(globalDeck)
-        //change the for each to itterate through 
         let deckCards = await fetchDeckCardsByDeckID(deckContent.id)
         console.log(deckCards)
         deckCards.forEach(renderList)
@@ -66,31 +67,22 @@ function renderList(deckCards){
     newCardDiv.append(newCardAmount, newCardName, newCardDelete)
     listDiv.append(newCardDiv)
     newCardName.addEventListener("mouseover", () => {
-        handleFetchHoverInfo(deckCards.scryfallID)
+        setTimeout(()=>{
+            fetchHoverByScryfallID(deckCards.scryfallID)
+        }, 100)
     });
     newCardDelete.addEventListener("click", (e) => handleCardDelete(deckCards.id, e))
     newCardAmount.addEventListener("click", (e) => handleChangeQuantity(deckCards, e))
 }
 
-function handleFetchHoverInfo(inputID){
-    let updatedID
-    fetch(`http://localhost:3000/cards`)
-    .then(res => res.json())
-    .then(res => {
-        updatedID = res.filter((res) => res.scryfallID == inputID );
-        updateHoverInfo(updatedID)
-    });
-}
-
-function updateHoverInfo(updatedID){
-    console.log(updatedID)
-    console.log(updatedID["0"]["cardName"])
-    hoverImage = document.querySelector("#detail-image")
-    hoverName = document.querySelector("#hover-card-name")
-    hoverInfo = document.querySelector("#hover-card-info")
-    hoverImage.src = updatedID["0"]["cardImage"]
-    hoverName.textContent = updatedID["0"]["cardName"]
-    hoverInfo.textContent = updatedID["0"]["cardRules"]
+function updateHoverInfo(updatedInfo){
+    console.log(updatedInfo)
+    let hoverImage = document.querySelector("#detail-image")
+    let hoverName = document.querySelector("#hover-card-name")
+    let hoverCardInfo = document.querySelector("#hover-card-info")
+    hoverImage.src = updatedInfo["image_uris"]["png"]
+    hoverName.textContent = updatedInfo["name"]
+    hoverCardInfo.textContent = updatedInfo["oracle_text"]
 }
 
 deckForm = document.querySelector("#addNewDeck")
@@ -98,6 +90,7 @@ deckForm.addEventListener("submit", (e) => addDeck(e))
 
 async function addDeck(e){
     e.preventDefault()
+
     let response = await fetch("http://localhost:3000/decks")
     let data = await response.json()
     let decksArrayLength = data.length-1
@@ -169,31 +162,37 @@ quickAddForm.addEventListener("submit", (e)=> quickAdd(e))
 
 async function quickAdd(e){
     e.preventDefault()
-    // let curentValue = e.target["search-db"].value
+    let curentValue = e.target["search-db"].value
     if(globalDeck !== null){
-        let response = await fetch("http://localhost:3000/deckCards")
-        let data = await response.json()
-        let decksArrayLength = data.length-1
-        let currentCardID = data[`${decksArrayLength}`].id
-        const newCard = {
-            deck_id: globalDeck.id,
-            id: currentCardID + 1,
-            cardName: e.target["search-db"].value,
-            cardQuantity: "1",
-            scryfallID: "IDHERE1"
-        }
-        if(e.target["search-db"].value == null){
-            alert("Please enter a valid card.")
-        } else{
-        fetch(`http://localhost:3000/deckCards`, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(newCard)
-        })
-        .then(res => res.json())
-        // .then(console.log)
-        renderList(newCard)
-        quickAddForm.reset()
+        let fuzzyResponse = await fetchFuzzyByName(curentValue)
+        if(fuzzyResponse !== false){
+            console.log(fuzzyResponse)
+            let fuzzyResponseID = fuzzyResponse.id
+            let fuzzyResponseName = fuzzyResponse.name
+            let response = await fetch("http://localhost:3000/deckCards")
+            let data = await response.json()
+            let decksArrayLength = data.length-1
+            let currentCardID = data[`${decksArrayLength}`].id
+            const newCard = {
+                deck_id: globalDeck.id,
+                id: currentCardID + 1,
+                cardName: fuzzyResponseName,
+                cardQuantity: "1",
+                scryfallID: fuzzyResponseID
+            }
+            if(e.target["search-db"].value == null){
+                alert("Please enter a valid card.")
+            } else{
+            fetch(`http://localhost:3000/deckCards`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(newCard)
+            })
+            .then(res => res.json())
+            // .then(console.log)
+            renderList(newCard)
+            quickAddForm.reset()
+            }
         }
 }else{
     alert("Please Select a Deck.")
@@ -261,26 +260,33 @@ function fetchGlobalCurrentDeckCards(){
     })
 }
 
-// function fetchIndiCardScryfall(){
-//     fetch('https://api.scryfall.com/cards/named?fuzzy=com+aust')
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data)
-//         allCards = data
-//     })
-// }
-
-// fetchIndiCardScryfall()
-
-function fetchFuzyIndiCardScryfall(cardName){
+function fetchFuzzyByName(cardName){
     let inputName = cardName.replace(/\s/g, '+')
     return fetch(`https://api.scryfall.com/cards/named?fuzzy=${inputName}`)
-    .then(response => response.json())
-    .then(console.log)
+    .then((response) => {
+        if (!response.ok) {
+            if (response.status === 404) {
+            // Check for 404 (Not Found) response and handle it
+            alert("Please enter a valid card.")
+            return false
+            } else {
+            // Handle other non-404 errors here if needed
+            throw new Error('Request failed with status: ' + response.status);
+            }
+        }
+        return response.json()
+    })
 }
 
-fetchFuzyIndiCardScryfall("owy shieldm")
+// fetchFuzzyByName("Please")
 
+function fetchHoverByScryfallID(scryfallID){
+    fetch(`https://api.scryfall.com/cards/${scryfallID}`)
+    .then(response => response.json())
+    .then(response => updateHoverInfo(response))
+}
+
+// fetchByScryfallID("dd4a00ff-2206-4e12-a0ab-61ed82c9e6c5")
 
 function fetchAuotcomplete(input){
     return fetch(`https://api.scryfall.com/cards/autocomplete?q=${input}`)

@@ -6,7 +6,6 @@ body {
     font-weight: bold;
 }
 
-
 #decks {
     display: grid, inline-grid;
     align-items: flex-start;
@@ -14,7 +13,9 @@ body {
     width: fit-content;
     flex-direction: row;
 }
-
+.input {
+    font-family: 'Papyrus', fantasy;
+}
 
 .eachDeckDiv{
     display: flex;
@@ -128,7 +129,7 @@ button[type=submit] {
     padding: 10px;
     border-radius: 5px;
     font-size: 20px;
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Papyrus', fantasy;
     box-sizing: border-box;
     margin-top: 10px;
 }
@@ -143,9 +144,10 @@ button[type=submit] {
     padding: 10px;
     border-radius: 5px;
     font-size: 20px;
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Papyrus', fantasy;
     box-sizing: border-box;
     margin-top: 10px;
+    font-weight: 700;
 }
 .eachCardAmount {
     color: gold;
