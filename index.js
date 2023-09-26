@@ -20,7 +20,9 @@ function renderDecks(deckContent){
     document.querySelector("#decks").append(newDeckDiv)
     newDeckName.addEventListener("click", () => {
         listDiv.textContent = ""
-        deckContent.deckCards.forEach(renderList)})
+        globalDeck = deckContent
+        deckContent.deckCards.forEach(renderList)
+    })
 }
 
 function renderList(deckCards){
@@ -93,9 +95,45 @@ quickAddForm.addEventListener("submit", (e)=> quickAdd(e))
 
 function quickAdd(e){
     e.preventDefault()
-
-    console.log(e.target["search-db"].value)
+    const newCard = {
+        cardName: e.target["search-db"].value,
+        cardQuantity: "1",
+        scryfallID: "IDHERE1"
+    }
+    globalDeck.deckCards.push(newCard)
+    fetch(`http://localhost:3000/decks/${globalDeck.id}`, {
+        method: "PATCH",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(globalDeck)
+    })
+    .then(res => res.json())
+    .then(console.log)
+    // .then(res => renderDecks(res));
 }
+
+// function quickAdd(e){
+//     e.preventDefault()
+//     const newCard = {
+//         cardName: e.target["search-db"].value,
+//         cardQuantity: "1",
+//         scryfallID: "IDHERE1"
+//     }
+//     fetch(`http://localhost:3000/decks/${globalDeck.id}`)
+//     .then(res => res.json())
+//     .then(res =>{
+//         const currentDeckCards = res.deckCards
+//         currentDeckCards.push(newCard)
+//     })
+    
+//     fetch(`http://localhost:3000/decks/${globalDeck.id}/deckCards`, {
+//         // method: "POST",
+//         // headers: {"Content-Type": "application/json"},
+//         // body: JSON.stringify(newCard)
+//     })
+//     .then(res => res.json())
+//     .then(console.log)
+//     // .then(res => renderDecks(res));
+// }
 
 // function updateHoverInfo(inputID){
 //     console.log(inputID)
