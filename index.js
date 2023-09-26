@@ -1,4 +1,4 @@
-//WORK ON THE RELATIONAL DB
+//TODO: On Deck Delete, Set Global Deck to a different deck
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch("http://localhost:3000/decks")
@@ -7,13 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
         globalDeck = res["0"]
         res.forEach(renderDecks)
     });
+    fetchAllCardNames()
+    fetchGlobalCurrentDeckCards()
 })
 
 let globalDeck
+let allCards
 let listDiv = document.querySelector("#list-div")
+let globalCurrentDeckCards
 
 
-//async functions solution
+//relational Database Function -- async function solution
 async function fetchDeckCardsByDeckID(deckID){
     let response = await fetch("http://localhost:3000/deckCards")
     let data = await response.json();
@@ -134,6 +138,7 @@ async function handleDeckDelete(deckID, e){
         deckCardsJSON.forEach((id)=> handleDeckContentsDelete(id))
         if(globalDeck.id == deckID){
             listDiv.textContent = ""
+
         }
     } else{
         console.log("Cancled")
@@ -210,141 +215,79 @@ function updateQuantiy(deckCardsID, inputValue){
     .then(console.log)
 }
 
+//API Interaction
+//Fetches All Card Names
+function fetchAllCardNames(){
+    setTimeout(()=>{
+        fetch('https://api.scryfall.com/catalog/card-names')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            allCards = data
+        })
+    }, 100)
+}
 
-// function quickAdd(e){
-//     e.preventDefault()
-//     const newCard = {
-//         cardName: e.target["search-db"].value,
-//         cardQuantity: "1",
-//         scryfallID: "IDHERE1"
+
+function fetchGlobalCurrentDeckCards(){
+    fetch('http://localhost:3000/deckCards')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        globalCurrentDeckCards = data
+    })
+}
+
+// function fetchIndiCardScryfall(){
+//     fetch('https://api.scryfall.com/cards/named?fuzzy=com+aust')
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log(data)
+//         allCards = data
+//     })
+// }
+
+// fetchIndiCardScryfall()
+
+function fetchFuzyIndiCardScryfall(cardName){
+    let inputName = cardName.replace(/\s/g, '+')
+    return fetch(`https://api.scryfall.com/cards/named?fuzzy=${inputName}`)
+    .then(response => response.json())
+    .then(console.log)
+}
+
+fetchFuzyIndiCardScryfall("Ashi Adept")
+
+
+function fetchAuotcomplete(input){
+    return fetch(`https://api.scryfall.com/cards/autocomplete?q=${input}`)
+    .then(response => response.json())
+    .then(console.log)
+}
+
+// function fetchAuotcomplete(input){
+//     setTimeout(()=>{
+//         return fetch(`https://api.scryfall.com/cards/autocomplete?q=${input}`)
+//         .then(response => response.json())
+//         .then(console.log)
+//     }, 100)
+// }
+
+fetchAuotcomplete("Ashiok")
+
+// function checkIfSolo(inputArray){
+//     if(inputArray.length === 1){
+//        //Excecute function 
 //     }
-//     fetch(`http://localhost:3000/decks/${globalDeck.id}`)
-//     .then(res => res.json())
-//     .then(res =>{
-//         const currentDeckCards = res.deckCards
-//         currentDeckCards.push(newCard)
-//     })
-    
-//     fetch(`http://localhost:3000/decks/${globalDeck.id}/deckCards`, {
-//         // method: "POST",
-//         // headers: {"Content-Type": "application/json"},
-//         // body: JSON.stringify(newCard)
-//     })
-//     .then(res => res.json())
-//     .then(console.log)
-//     // .then(res => renderDecks(res));
+//     else if(inputArray.length >= 2){
+//         alert("The value you entered has multiple results.")
+//     }
+//     else{
+//         alert("The value you inputed has no matching resuts.")
+//     }
 // }
 
-// function updateHoverInfo(inputID){
-//     console.log(inputID)
-//     console.log(handleFetchHoverInfo(inputID))
-//     hoverImage = document.querySelector("#detail-image")
+// function updateSearches(){
 // }
 
-// function handleFetchHoverInfo(inputID){
-//     let updatedID
-//     fetch(`http://localhost:3000/cards`)
-//     .then(res => res.json())
-//     .then(res => {
-//         updatedID = res.filter((res) => res.scryfallID == inputID );
-//     });
-//     return updatedID
-// }
-
-// function callSryfall(){
-//     return fetch("https://api.scryfall.com/cards/autocomplete?q=thal")
-//     .then(res => res.json())
-// }
-
-// console.log(callSryfall())
-
-
-//cleaned up attempt using.filter
-// function fetchDeckCardsByDeckID(deckID){
-//     let deckCardsJSON
-//     fetch("http://localhost:3000/deckCards")
-//     .then(res => res.json())
-//     .then(res => {
-//         deckCardsJSON = res.filter((res) => res.deck_id == deckID);
-//         return deckCardsJSON
-//         })
-// }
-
-    //attempt using .filter
-    // function handleFetchDeckCardsByDeckID(deckID){
-    //     // const deckList = [];
-    //     console.log(deckID)
-    //     let decksJSON
-    //     let deckCardsJSON
-    //     // fetch("http://localhost:3000/decks")
-    //     // .then(res => res.json())
-    //     // .then(res => res)
-    //     fetch("http://localhost:3000/deckCards")
-    //     .then(res => res.json())
-    //     .then(res => {
-    //         deckCardsJSON = res
-    //         deckCardsJSON = res.filter((res) => res.deck_id == deckID );
-    //         console.log(deckCardsJSON)
-    //         // updatedID = res.filter((res) => res.scryfallID == inputID );
-    //         // updateHoverInfo(updatedID)
-    //         })
-    // }
-
-    //attempt using fetches outside of original function:: getting async errors
-    // function handleFetchDeckCardsByDeckID(){
-    //     let decksJSON
-    //     let deckCardsJSON
-    //     fetch("http://localhost:3000/decks")
-    //     .then(res => res.json())
-    //     .then(res => decksJSON = res)
-    //     fetch("http://localhost:3000/deckCards")
-    //     .then(res => res.json())
-    //     .then(res => deckCardsJSON = res)
-    // }
-
-    //1st attempt baed off of example given by chatGPT
-    // function fetchDeckCardsByDeckID(decksID){
-        // const deckList = [];
-        // let decksJSON
-        // let deckCardsJSON
-        // fetch("http://localhost:3000/decks")
-        // .then(res => res.json())
-        // .then(res => decksJSON = res)
-        // fetch("http://localhost:3000/deckCards")
-        // .then(res => res.json())
-        // .then(res => deckCardsJSON = res)
-        // console.log(decksJSON)
-        // console.log(deckCardsJSON)
-            // for (const cards of deckCardsJSON) {
-            //     if (cards.deck_id === deckID) {
-            //       // Find the user information for the post's user_id
-            //       const user = decksJSON.find((deck) => deck.id === deckID);
-            //       if (user) {
-            //         deckList.push({
-            //           cards,
-            //           decks
-            //         });
-            //       }
-            //     }
-            //   }
-            //   return deckList;
-            // }
-
-    //example given by chatGPT
-    // function fetchPostsByUserId(userId) {
-    //   const userPosts = [];
-    //     for (const post of jsonData.posts) {
-    //         if (post.user_id === userId) {
-    //           // Find the user information for the post's user_id
-    //           const user = jsonData.users.find((user) => user.id === userId);
-    //           if (user) {
-    //             userPosts.push({
-    //               post,
-    //               user
-    //             });
-    //           }
-    //         }
-    //       }
-        
-    //       return userPosts;
-    //     }
+//Compare Input to All Card Names
