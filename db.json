@@ -45,7 +45,7 @@
       "deck_id": 1,
       "id": 1,
       "cardName": "card1",
-      "cardQuantity": "10",
+      "cardQuantity": "3",
       "scryfallID": "IDHERE1"
     },
     {
@@ -56,11 +56,25 @@
       "scryfallID": "IDHERE2"
     },
     {
-      "deck_id": 2,
-      "id": 3,
+      "deck_id": 1,
       "cardName": "Please?",
-      "cardQuantity": "4",
-      "scryfallID": "IDHERE1"
+      "cardQuantity": "1",
+      "scryfallID": "IDHERE1",
+      "id": 3
+    },
+    {
+      "deck_id": 1,
+      "cardName": "hello",
+      "cardQuantity": "1",
+      "scryfallID": "IDHERE1",
+      "id": 5
+    },
+    {
+      "deck_id": 1,
+      "cardName": "Please?",
+      "cardQuantity": "1",
+      "scryfallID": "IDHERE1",
+      "id": 7
     }
   ]
 }

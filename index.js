@@ -1,10 +1,10 @@
-//TODO: On Deck Delete, Set Global Deck to a different deck
+//TODO: On Deck Delete, Set Global Deck to a different deck  
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch("http://localhost:3000/decks")
     .then(res => res.json())
     .then(res => { 
-        globalDeck = res["0"]
+        globalDeck = null
         res.forEach(renderDecks)
     });
     fetchAllCardNames()
@@ -34,18 +34,22 @@ function renderDecks(deckContent){
     newDeckDelete.textContent = "x"
     newDeckDiv.append(newDeckName, newDeckDelete)
     document.querySelector("#decks").append(newDeckDiv)
+    console.log(deckContent)
     newDeckName.addEventListener("click", async () => {
         listDiv.textContent = ""
         globalDeck = deckContent
         console.log(deckContent.id)
+        console.log(globalDeck)
         //change the for each to itterate through 
         let deckCards = await fetchDeckCardsByDeckID(deckContent.id)
+        console.log(deckCards)
         deckCards.forEach(renderList)
     })
     newDeckDelete.addEventListener("click", (e)=> handleDeckDelete(deckContent.id, e))
 }
 
 function renderList(deckCards){
+    console.log(deckCards)
     let newCardDiv = document.createElement("div")
     let newCardName = document.createElement("p")
     // let newCardDynamicAmmount = document.createElement("div")
@@ -92,9 +96,14 @@ function updateHoverInfo(updatedID){
 deckForm = document.querySelector("#addNewDeck")
 deckForm.addEventListener("submit", (e) => addDeck(e))
 
-function addDeck(e){
+async function addDeck(e){
     e.preventDefault()
+    let response = await fetch("http://localhost:3000/decks")
+    let data = await response.json()
+    let decksArrayLength = data.length-1
+    let currentID = data[`${decksArrayLength}`].id
     let newDeckObj = {
+        id: currentID + 1,
         deckName: e.target["deck-name-input"].value,
         deckType: "TestType"
         }
@@ -135,11 +144,11 @@ async function handleDeckDelete(deckID, e){
         })
         .then(res => res.json())
         let deckCardsJSON = await fetchDeckCardsByDeckID(deckID)
-        console.log(deckCardsJSON)
-        deckCardsJSON.forEach((id)=> handleDeckContentsDelete(id))
+        deckCardsJSON.forEach(async (id)=> handleDeckContentsDelete(id))
         if(globalDeck.id == deckID){
             listDiv.textContent = ""
-
+            globalDeck = null
+            console.log(globalDeck)
         }
     } else{
         console.log("Cancled")
@@ -158,43 +167,56 @@ function handleDeckContentsDelete(deckCardID){
 quickAddForm = document.querySelector("#quick-add")
 quickAddForm.addEventListener("submit", (e)=> quickAdd(e))
 
-function quickAdd(e){
+async function quickAdd(e){
     e.preventDefault()
-    const newCard = {
-        deck_id: globalDeck.id,
-        cardName: e.target["search-db"].value,
-        cardQuantity: "1",
-        scryfallID: "IDHERE1"
-    }
-    if(e.target["search-db"].value == null){
-        alert("Please enter a valid card.")
-    } else{
-    fetch(`http://localhost:3000/deckCards`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(newCard)
-    })
-    .then(res => res.json())
-    // .then(console.log)
-    renderList(newCard)
-    quickAddForm.reset()
-    }
+    // let curentValue = e.target["search-db"].value
+    if(globalDeck !== null){
+        let response = await fetch("http://localhost:3000/deckCards")
+        let data = await response.json()
+        let decksArrayLength = data.length-1
+        let currentCardID = data[`${decksArrayLength}`].id
+        const newCard = {
+            deck_id: globalDeck.id,
+            id: currentCardID + 1,
+            cardName: e.target["search-db"].value,
+            cardQuantity: "1",
+            scryfallID: "IDHERE1"
+        }
+        if(e.target["search-db"].value == null){
+            alert("Please enter a valid card.")
+        } else{
+        fetch(`http://localhost:3000/deckCards`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(newCard)
+        })
+        .then(res => res.json())
+        // .then(console.log)
+        renderList(newCard)
+        quickAddForm.reset()
+        }
+}else{
+    alert("Please Select a Deck.")
+}
 }
 
 function handleChangeQuantity(deckCards, e){
+    let currentCard = deckCards
     let eachCardAmount = e.target
     let currentCardAmount = eachCardAmount.value
     let inputNewCardAmount = document.createElement("input")
     inputNewCardAmount.className = "eachCardAmountInput"
     eachCardAmount.replaceWith(inputNewCardAmount)
     console.log(deckCards)
-    inputNewCardAmount.addEventListener("keydown", (e)=>{
+    inputNewCardAmount.addEventListener("keydown", (e)=> {
         if (e.key === "Enter") {
             if(inputNewCardAmount.value >= 0 && inputNewCardAmount.value <= 99){
+            currentCardID = currentCard.id
+            inputNewCardAmountValue = 
             currentCardAmount = inputNewCardAmount.value
             inputNewCardAmount.replaceWith(eachCardAmount)
             eachCardAmount.textContent = currentCardAmount
-            updateQuantiy(deckCards.id, inputNewCardAmount.value)
+            updateQuantiy(currentCardID, currentCardAmount)
             }
             else{
                 alert("Enter a number between 1-99")
@@ -203,8 +225,8 @@ function handleChangeQuantity(deckCards, e){
     })
 }
 
-
 function updateQuantiy(deckCardsID, inputValue){
+    console.log(deckCardsID)
     return fetch(`http://localhost:3000/deckCards/${deckCardsID}`, {
         method: "PATCH",
         headers: {"Content-Type": "application/json"},
@@ -257,7 +279,7 @@ function fetchFuzyIndiCardScryfall(cardName){
     .then(console.log)
 }
 
-fetchFuzyIndiCardScryfall("Ashi Adept")
+fetchFuzyIndiCardScryfall("owy shieldm")
 
 
 function fetchAuotcomplete(input){
@@ -274,7 +296,7 @@ function fetchAuotcomplete(input){
 //     }, 100)
 // }
 
-fetchAuotcomplete("Ashiok")
+fetchAuotcomplete("Mox")
 
 // function checkIfSolo(inputArray){
 //     if(inputArray.length === 1){
