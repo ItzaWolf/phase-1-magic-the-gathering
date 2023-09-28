@@ -81,6 +81,9 @@ function updateHoverInfo(updatedInfo){
     let hoverImage = document.querySelector("#detail-image")
     let hoverName = document.querySelector("#hover-card-name")
     let hoverCardInfo = document.querySelector("#hover-card-info")
+    let currentDeckName
+    globalDeck == null? currentDeckName = "SELECT DECK" : currentDeckName = `${globalDeck.deckName}`
+    addFromHover.textContent = `Add ${updatedInfo.name} to ${currentDeckName}`
     if (updatedInfo.hasOwnProperty("image_uris")) {
         hoverImage.src = updatedInfo["image_uris"]["png"];
         hoverName.textContent = updatedInfo["name"]
@@ -97,7 +100,38 @@ function updateHoverInfo(updatedInfo){
             hoverImage.src === frontImage ? hoverImage.src = backImage : hoverImage.src = frontImage
         })
     }
-    
+    currentInfo = updatedInfo
+}
+
+let addFromHover = document.querySelector("#add-hover-deck")
+let currentInfo
+addFromHover.addEventListener("click", ()=> hoverAdd(currentInfo))
+
+async function hoverAdd(updatedInfo){
+    if(globalDeck !== null){
+        let response = await fetch("http://localhost:3000/deckCards")
+        let data = await response.json()
+        let decksArrayLength = data.length-1
+        let currentCardID = data[`${decksArrayLength}`].id
+        const newCard = {
+            deck_id: globalDeck.id,
+            id: currentCardID + 1,
+            cardName: updatedInfo.name,
+            cardQuantity: "1",
+            scryfallID: updatedInfo.id
+        }
+        fetch(`http://localhost:3000/deckCards`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(newCard)
+        })
+        .then(response => response.json())
+        console.log(newCard)
+        renderList(newCard)
+    }else{
+        alert("Please Select a Deck.")
+    }
+
 }
 
 deckForm = document.querySelector("#addNewDeck")
@@ -318,6 +352,7 @@ function compileSearch(e){
     let searchNameValueOutput = ""
     searchNameValue === "" ? searchNameValueOutput = "" : searchNameValueOutput = "name%3D"+searchNameValue
     let allOutput = cmcCompareOutput+toughnessCompareOutput+powerCompareOutput+cOutput+searchTypeOutput+searchNameValueOutput
+    console.log(powerValue)
     if(allOutput === ""){
         alert("Please change one or more values before searching.")
     }else{
@@ -325,13 +360,19 @@ function compileSearch(e){
     fetch(`https://api.scryfall.com/cards/search?order=${sortBy}&q=${searchTypeOutput}${cOutput}${powerCompareOutput}${toughnessCompareOutput}${cmcCompareOutput}${searchNameValueOutput}`)
     .then((response) => {
         if (!response.ok) {
-            searchTermCount.textContent = `Found 0 cards using the search term \"${searchNameValue}\"`
+            searchTermCount.textContent = `Found 0 cards using the search term: \"${searchNameValue}\"`
         }
         return response.json()
     })
     .then(response => {
         response.data.forEach(appendSearch)
-        searchTermCount.textContent = `Found ${response.data.length} cards using the search term \"${searchNameValue}\"`
+        if(response.has_more.value === true){
+            searchTermCount.textContent = `Displaying ${response.data.length} of the ${response.data.length} found cards using the search term: \"${searchNameValue}\"`
+            console.log(response)
+        }else{
+            searchTermCount.textContent = `Displaying ${response.data.length} of the ${`${response.total_cards}`} found cards using the search term: \"${searchNameValue}\"`
+            console.log(response)
+        }
     })
     .then(searchForm.reset())
     }

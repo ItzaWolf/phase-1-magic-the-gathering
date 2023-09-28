@@ -87,10 +87,17 @@
     },
     {
       "deck_id": 5,
-      "id": 17,
+      "id": 22,
       "cardName": "Delver of Secrets // Insectile Aberration",
       "cardQuantity": "1",
       "scryfallID": "abff6c81-65a4-48fa-ba8f-580f87b0344a"
+    },
+    {
+      "deck_id": 2,
+      "id": 23,
+      "cardName": "Ghalta and Mavren",
+      "cardQuantity": "1",
+      "scryfallID": "a9ec900f-1e31-4440-a75a-20b256734d5b"
     }
   ]
 }

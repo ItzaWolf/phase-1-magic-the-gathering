@@ -58,7 +58,9 @@ body {
     margin-left: -3px;
     top: 1;
 }
-
+#add-hover-deck{
+    font-size: medium;
+}
 #right-div {
     height: 25;
     width: 49%;
