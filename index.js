@@ -1,7 +1,3 @@
-//TODO: On Deck Delete, Set Global Deck to a different deck
-//      Fix Flip Cards breaking deckbuilder
-//      Get Name Search Working
-
 document.addEventListener('DOMContentLoaded', () => {
     fetch("http://localhost:3000/decks")
     .then(res => res.json())
@@ -112,7 +108,8 @@ async function hoverAdd(updatedInfo){
         let response = await fetch("http://localhost:3000/deckCards")
         let data = await response.json()
         let decksArrayLength = data.length-1
-        let currentCardID = data[`${decksArrayLength}`].id
+        let currentCardID
+        data.hasOwnProperty("id") ? currentCardID = data[`${decksArrayLength}`].id : currentCardID = 0
         const newCard = {
             deck_id: globalDeck.id,
             id: currentCardID + 1,
@@ -139,11 +136,12 @@ deckForm.addEventListener("submit", (e) => addDeck(e))
 
 async function addDeck(e){
     e.preventDefault()
-
     let response = await fetch("http://localhost:3000/decks")
     let data = await response.json()
-    let decksArrayLength = data.length-1
-    let currentID = data[`${decksArrayLength}`].id
+    let decksArrayLength = data.length-1 
+    // data.length != 0 ? decksArrayLength = data.length-1 : decksArrayLength = 0
+    let currentID 
+    data.hasOwnProperty("id") ? currentID = data[`${decksArrayLength}`].id : currentID = 0
     let newDeckObj = {
         id: currentID + 1,
         deckName: e.target["deck-name-input"].value,
@@ -221,7 +219,8 @@ async function quickAdd(e){
             let response = await fetch("http://localhost:3000/deckCards")
             let data = await response.json()
             let decksArrayLength = data.length-1
-            let currentCardID = data[`${decksArrayLength}`].id
+            let currentCardID
+            data.hasOwnProperty("id") ? currentCardID = data[`${decksArrayLength}`].id : currentCardID = 0
             const newCard = {
                 deck_id: globalDeck.id,
                 id: currentCardID + 1,
