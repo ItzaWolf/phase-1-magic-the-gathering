@@ -1,4 +1,6 @@
-//TODO: On Deck Delete, Set Global Deck to a different deck  
+//TODO: On Deck Delete, Set Global Deck to a different deck
+//      Fix Flip Cards breaking deckbuilder
+//      Get Name Search Working
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch("http://localhost:3000/decks")
@@ -7,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         globalDeck = null
         res.forEach(renderDecks)
     });
-    fetchAllCardNames()
     fetchGlobalCurrentDeckCards()
 })
 
@@ -80,9 +81,23 @@ function updateHoverInfo(updatedInfo){
     let hoverImage = document.querySelector("#detail-image")
     let hoverName = document.querySelector("#hover-card-name")
     let hoverCardInfo = document.querySelector("#hover-card-info")
-    hoverImage.src = updatedInfo["image_uris"]["png"]
-    hoverName.textContent = updatedInfo["name"]
-    hoverCardInfo.textContent = updatedInfo["oracle_text"]
+    if (updatedInfo.hasOwnProperty("image_uris")) {
+        hoverImage.src = updatedInfo["image_uris"]["png"];
+        hoverName.textContent = updatedInfo["name"]
+        hoverCardInfo.textContent = updatedInfo["oracle_text"]
+    } else {
+        let frontImage = updatedInfo["card_faces"]["0"]["image_uris"]["png"]
+        let backImage = updatedInfo["card_faces"]["1"]["image_uris"]["png"]
+        let frontText = updatedInfo["card_faces"]["0"]["oracle_text"]
+        let backText = updatedInfo["card_faces"]["1"]["oracle_text"]
+        hoverImage.src = frontImage
+        hoverName.textContent = updatedInfo["name"]
+        hoverCardInfo.textContent = frontText+" // "+backText
+        hoverImage.addEventListener("click", ()=> {
+            hoverImage.src === frontImage ? hoverImage.src = backImage : hoverImage.src = frontImage
+        })
+    }
+    
 }
 
 deckForm = document.querySelector("#addNewDeck")
@@ -237,19 +252,6 @@ function updateQuantiy(deckCardsID, inputValue){
     .then(console.log)
 }
 
-//API Interaction
-//Fetches All Card Names
-function fetchAllCardNames(){
-    setTimeout(()=>{
-        fetch('https://api.scryfall.com/catalog/card-names')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            allCards = data
-        })
-    }, 100)
-}
-
 
 function fetchGlobalCurrentDeckCards(){
     fetch('http://localhost:3000/deckCards')
@@ -288,35 +290,97 @@ function fetchHoverByScryfallID(scryfallID){
 
 // fetchByScryfallID("dd4a00ff-2206-4e12-a0ab-61ed82c9e6c5")
 
-function fetchAuotcomplete(input){
-    return fetch(`https://api.scryfall.com/cards/autocomplete?q=${input}`)
-    .then(response => response.json())
-    .then(console.log)
+
+function compileSearch(e){
+    e.preventDefault()
+    let searchul = document.querySelector("#search-results-ul")
+    searchul.textContent = ""
+    const sortBy = document.querySelector("#search-order").value
+    const searchType = document.querySelector("#search-type").value
+    let searchTypeOutput
+    searchType === "" ? searchTypeOutput = "" : searchTypeOutput = "type_line="+searchType
+    let cTotal = wOutput+uOutput+bOutput+rOutput+gOutput
+    let cOutput = ""
+    cTotal === "" ? cOutput = "" : cOutput = "+color%3A"+cTotal
+    const powerCompare = document.querySelector("#power-compare").value
+    const powerValue = document.querySelector("#power-value").value
+    let powerCompareOutput = ""
+    powerValue === "" ? powerCompareOutput = "" : powerCompareOutput = "+power"+powerCompare+powerValue
+    const toughnessCompare = document.querySelector("#toughness-compare").value
+    const toughnessValue = document.querySelector("#toughness-value").value
+    let toughnessCompareOutput = ""
+    toughnessValue === "" ? toughnessCompareOutput = "" : toughnessCompareOutput = "+toughness"+toughnessCompare+toughnessValue
+    const cmcCompare = document.querySelector("#cmc-compare").value
+    const cmcValue = document.querySelector("#cmc-value").value
+    let cmcCompareOutput = ""
+    cmcValue === "" ? cmcCompareOutput = "" : cmcCompareOutput = "+cmc"+cmcCompare+cmcValue
+    let searchNameValue = document.querySelector("#search-scryfall").value
+    let searchNameValueOutput = ""
+    searchNameValue === "" ? searchNameValueOutput = "" : searchNameValueOutput = "name%3D"+searchNameValue
+    let allOutput = cmcCompareOutput+toughnessCompareOutput+powerCompareOutput+cOutput+searchTypeOutput+searchNameValueOutput
+    if(allOutput === ""){
+        alert("Please change one or more values before searching.")
+    }else{
+    console.log(`https://api.scryfall.com/cards/search?order=${sortBy}&q=${searchTypeOutput}${cOutput}${powerCompareOutput}${toughnessCompareOutput}${cmcCompareOutput}${searchNameValueOutput}`)
+    fetch(`https://api.scryfall.com/cards/search?order=${sortBy}&q=${searchTypeOutput}${cOutput}${powerCompareOutput}${toughnessCompareOutput}${cmcCompareOutput}${searchNameValueOutput}`)
+    .then((response) => {
+        if (!response.ok) {
+            searchTermCount.textContent = `Found 0 cards using the search term \"${searchNameValue}\"`
+        }
+        return response.json()
+    })
+    .then(response => {
+        response.data.forEach(appendSearch)
+        searchTermCount.textContent = `Found ${response.data.length} cards using the search term \"${searchNameValue}\"`
+    })
+    .then(searchForm.reset())
+    }
 }
 
+
+const searchTermCount = document.querySelector("#search-term-count")
+const wCheck = document.querySelector("#wCheck")
+wCheck.addEventListener("change", () => {wCheck.checked ? wOutput = "white" : wOutput = ""})
+let wOutput = ""
+const uCheck = document.querySelector("#uCheck")
+uCheck.addEventListener("change", () => {uCheck.checked ? uOutput = "blue" : uOutput = ""})
+let uOutput = ""
+const bCheck = document.querySelector("#bCheck")
+bCheck.addEventListener("change", () => {bCheck.checked ? bOutput = "black" : bOutput = ""})
+let bOutput = ""
+const rCheck = document.querySelector("#rCheck")
+rCheck.addEventListener("change", () => {rCheck.checked ? rOutput = "red" : rOutput = ""})
+let rOutput = ""
+const gCheck = document.querySelector("#gCheck")
+rCheck.addEventListener("change", () => {gCheck.checked ? gOutput = "green" : gOutput = ""})
+let gOutput = ""
+
+// const CheckW = document.querySelector("#wCheck")
+// CheckW.addEventListener("change", () => console.log(CheckW))
+
+const searchForm = document.querySelector("#search-cards")
+searchForm.addEventListener("submit", (e)=>compileSearch(e))
+
+function appendSearch(card){
+    let searchul = document.querySelector("#search-results-ul")
+    let newSearchCardDiv = document.createElement("div")
+    newSearchCardDiv.id = card.id
+    let newSearchCardp = document.createElement("p")
+    newSearchCardp.textContent = card.name
+    newSearchCardDiv.append(newSearchCardp)
+    searchul.append(newSearchCardDiv)
+    newSearchCardp.addEventListener("click", () => {
+        setTimeout(()=>{
+            fetchHoverByScryfallID(card.id)
+        }, 100)
+    });
+}
+
+
 // function fetchAuotcomplete(input){
-//     setTimeout(()=>{
-//         return fetch(`https://api.scryfall.com/cards/autocomplete?q=${input}`)
-//         .then(response => response.json())
-//         .then(console.log)
-//     }, 100)
+//     return fetch(`https://api.scryfall.com/cards/autocomplete?q=${input}`)
+//     .then(response => response.json())
+//     .then(console.log)
 // }
 
-fetchAuotcomplete("Mox")
-
-// function checkIfSolo(inputArray){
-//     if(inputArray.length === 1){
-//        //Excecute function 
-//     }
-//     else if(inputArray.length >= 2){
-//         alert("The value you entered has multiple results.")
-//     }
-//     else{
-//         alert("The value you inputed has no matching resuts.")
-//     }
-// }
-
-// function updateSearches(){
-// }
-
-//Compare Input to All Card Names
+// fetchAuotcomplete("Mox")

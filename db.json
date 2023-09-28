@@ -14,6 +14,11 @@
       "id": 4,
       "deckName": "UB shadow",
       "deckType": "TestType"
+    },
+    {
+      "id": 5,
+      "deckName": "Danny's Deck",
+      "deckType": "TestType"
     }
   ],
   "deckCards": [
@@ -58,6 +63,34 @@
       "cardName": "Asmoranomardicadaistinaculdacar",
       "cardQuantity": "1",
       "scryfallID": "d99a9a7d-d9ca-4c11-80ab-e39d5943a315"
+    },
+    {
+      "deck_id": 5,
+      "id": 14,
+      "cardName": "The One Ring",
+      "cardQuantity": "1",
+      "scryfallID": "d5806e68-1054-458e-866d-1f2470f682b2"
+    },
+    {
+      "deck_id": 5,
+      "id": 15,
+      "cardName": "Gandalf the White",
+      "cardQuantity": "1",
+      "scryfallID": "e384c20b-d0c1-4781-9d11-e89e5a6bf3fc"
+    },
+    {
+      "deck_id": 5,
+      "id": 16,
+      "cardName": "Black Lotus",
+      "cardQuantity": "1",
+      "scryfallID": "bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd"
+    },
+    {
+      "deck_id": 5,
+      "id": 17,
+      "cardName": "Delver of Secrets // Insectile Aberration",
+      "cardQuantity": "1",
+      "scryfallID": "abff6c81-65a4-48fa-ba8f-580f87b0344a"
     }
   ]
 }
