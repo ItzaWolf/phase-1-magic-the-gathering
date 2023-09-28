@@ -14,11 +14,11 @@
             <h1>DECK BUILDER</h1>
         </div>
         <hr/>
-            <div id="deckName">
+            <div id="addNewDeckDiv">
                 <form id ="addNewDeck">
                 <label for="deck-name-input">Add New Deck</label>
-                <input id="deck-name-input" type="text" placeholder="Deck Name..."/>
-                <button type="submit">Add New Deck</button>
+                <input class="input" id="deck-name-input" type="text" placeholder="Deck Name..."/>
+                <button class="input" type="submit">Add New Deck</button>
                 </form>
             <hr/>
         </div>
@@ -30,11 +30,11 @@
             <div id="left-div">
                 <form id="quick-add">
                     <label for="search-db">Quick Add to Deck Selected</label>
-                    <input id="search-db" type="text" placeholder="Card Name..."/>
-                    <button type="submit">Quick Add</button>
+                    <input class="input" id="search-db" type="text" placeholder="Card Name..."/>
+                    <button class="input" type="submit">Quick Add</button>
                 </form>
             <div id= "quickAdd">
-                <h3>Card Stash</h3>
+                <h3 id="current-deck-name">Deck Name</h3>
             </div>
             <div id="list-div">
                 <p>List Here</p>
@@ -43,24 +43,125 @@
         <hr class="vl">
             <div id="right-div">
                 <div id="hover-info">
-                    <img id="detail-image" src="" />
+                    <img class="card_images" id="detail-image" src="https://cards.scryfall.io/png/front/b/d/bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd.png?1614638838"/>
                         <div>
                             <h2 id="hover-card-name">Card Name</h2>  <!-- Remove these when ready to push API value card name -->
                             <p id="hover-card-info">Card Info</p> <!-- Remove these when ready to push API value card name-->
+                            <button type="submit" id="add-hover-deck">Please Select a Card</button>
                         </div>
                 </div>
             <hr>
                 <div id="search-div">
+                    <label for="sort-by">Sort By...:</label> 
+                        <select name="search-order" id="search-order"> 
+                            <option value="name">Name</option> 
+                            <option value="cmc">CMC</option> 
+                            <option value="color">Color</option> 
+                            <option value="power">Power</option> 
+                            <option value="toughness">Toughness</option> 
+                        </select>
+                    <label for="Type">Type:</label> 
+                    <select name="search-type" id="search-type"> 
+                        <option value="">All Types</option> 
+                        <option value="artifact">Artifact</option> 
+                        <option value="creature">Creature</option> 
+                        <option value="enchantment">Enchantment</option> 
+                        <option value="instant">Instant</option> 
+                        <option value="land">Land</option>
+                        <option value="sorcery">Sorcery</option>
+                        <option value="planeswalker">Planeswalker</option>
+                    <div id="color-checks">
+                            <input type="checkbox" id="wCheck">
+                        <label for="White">White</label>
+                            <input type="checkbox" id="uCheck">
+                        <label for="Blue">Blue</label>
+                            <input type="checkbox" id="bCheck">
+                        <label for="Black">Black</label>
+                            <input type="checkbox" id="rCheck">
+                        <label for="Red">Red</label>
+                            <input type="checkbox" id="gCheck">
+                        <label for="Green">Green</label>
+                    </div>
+                    <div id="power-check">
+                        <label for="power-selector">Power:</label> 
+                            <select name="power-compare" id="power-compare"> 
+                                <option value="%3D">=</option> 
+                                <option value="%3C">&#60;</option> 
+                                <option value="%3E">></option> 
+                                <option value="%3C%3D">&#60;=</option>
+                                <option value="%3E%3D">>=</option> 
+                            </select>
+                            <select name="power-value" id="power-value"> 
+                                <option value=""></option> 
+                                <option value="1">1</option> 
+                                <option value="2">2</option> 
+                                <option value="3">3</option> 
+                                <option value="4">4</option> 
+                                <option value="5">5</option> 
+                                <option value="6">6</option> 
+                                <option value="7">7</option> 
+                                <option value="8">8</option> 
+                                <option value="9">9</option> 
+                                <option value="10">10</option> 
+                            </select>
+                    <div id="toughness-check">
+                        <label for="toughness-selector">Toughness:</label> 
+                            <select name="toughness-compare" id="toughness-compare"> 
+                                <option value="%3D">=</option> 
+                                <option value="%3C">&#60;</option> 
+                                <option value="%3E">></option> 
+                                <option value="%3C%3D">&#60;=</option>
+                                <option value="%3E%3D">>=</option> 
+                            </select>
+                            <select name="toughness-value" id="toughness-value"> 
+                                <option value=""></option> 
+                                <option value="1">1</option> 
+                                <option value="2">2</option> 
+                                <option value="3">3</option> 
+                                <option value="4">4</option> 
+                                <option value="5">5</option> 
+                                <option value="6">6</option> 
+                                <option value="7">7</option> 
+                                <option value="8">8</option> 
+                                <option value="9">9</option> 
+                                <option value="10">10</option> 
+                            </select>
+                    <div id="CMC">
+                        <label for="cmc-selector">CMC:</label> 
+                            <select name="cmc-compare" id="cmc-compare"> 
+                                <option value="%3D">=</option> 
+                                <option value="%3C">&#60;</option> 
+                                <option value="%3E">></option> 
+                                <option value="%3C%3D">&#60;=</option>
+                                <option value="%3E%3D">>=</option> 
+                            </select>
+                            <select name="cmc-value" id="cmc-value"> 
+                                <option value=""></option> 
+                                <option value="1">1</option> 
+                                <option value="2">2</option> 
+                                <option value="3">3</option> 
+                                <option value="4">4</option> 
+                                <option value="5">5</option> 
+                                <option value="6">6</option> 
+                                <option value="7">7</option> 
+                                <option value="8">8</option> 
+                                <option value="9">9</option> 
+                                <option value="10">10</option> 
+                            </select>
                     <form id="search-cards">
                         <label for="search-scryfall">Search Cards</label>
                         <input id="search-scryfall" type="text" placeholder="Card Name..."/>
                         <button type="submit">Search</button>
+                        <ul class="auto-result"></ul>
                     </form>
+                    </div>
+                    <hr>
+                    <div id="search-results">
+                        <h3 id="search-term-count"></h3>
+                        <ul id="search-results-ul">
+                        </ul>
+                    </div>
                 </div>
-            <hr>
-                <div id="search-results">
-                <p>test</p> <!-- Remove these when ready to push API value card name-->
                 </div>
-            </div>
         </body>
 </html>
