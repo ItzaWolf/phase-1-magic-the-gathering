@@ -109,7 +109,7 @@ async function hoverAdd(updatedInfo){
         let data = await response.json()
         let decksArrayLength = data.length-1
         let currentCardID
-        data.hasOwnProperty("id") ? currentCardID = data[`${decksArrayLength}`].id : currentCardID = 0
+        data.length != 0 ? currentCardID = data[`${decksArrayLength}`].id : currentCardID = 0
         const newCard = {
             deck_id: globalDeck.id,
             id: currentCardID + 1,
@@ -141,7 +141,7 @@ async function addDeck(e){
     let decksArrayLength = data.length-1 
     // data.length != 0 ? decksArrayLength = data.length-1 : decksArrayLength = 0
     let currentID 
-    data.hasOwnProperty("id") ? currentID = data[`${decksArrayLength}`].id : currentID = 0
+    data.length != 0 ? currentID = data[`${decksArrayLength}`].id : currentID = 0
     let newDeckObj = {
         id: currentID + 1,
         deckName: e.target["deck-name-input"].value,
@@ -220,7 +220,7 @@ async function quickAdd(e){
             let data = await response.json()
             let decksArrayLength = data.length-1
             let currentCardID
-            data.hasOwnProperty("id") ? currentCardID = data[`${decksArrayLength}`].id : currentCardID = 0
+            data.length != 0 ? currentCardID = data[`${decksArrayLength}`].id : currentCardID = 0
             const newCard = {
                 deck_id: globalDeck.id,
                 id: currentCardID + 1,
