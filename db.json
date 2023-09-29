@@ -1,4 +1,18 @@
 {
-  "decks": [],
-  "deckCards": []
+  "decks": [
+    {
+      "id": 1,
+      "deckName": "hello",
+      "deckType": "TestType"
+    }
+  ],
+  "deckCards": [
+    {
+      "deck_id": 1,
+      "id": 1,
+      "cardName": "Didn't Say Please",
+      "cardQuantity": "1",
+      "scryfallID": "77500b53-0852-4d6a-bfe3-b1e8ef5a12cd"
+    }
+  ]
 }

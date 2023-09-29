@@ -348,8 +348,9 @@ function compileSearch(e){
     let cmcCompareOutput = ""
     cmcValue === "" ? cmcCompareOutput = "" : cmcCompareOutput = "+cmc"+cmcCompare+cmcValue
     let searchNameValue = document.querySelector("#search-scryfall").value
+    let searchNameValuePlus = searchNameValue.replace(/\s/g, '+')
     let searchNameValueOutput = ""
-    searchNameValue === "" ? searchNameValueOutput = "" : searchNameValueOutput = "name%3D"+searchNameValue
+    searchNameValue === "" ? searchNameValueOutput = "" : searchNameValueOutput = "name%3D"+searchNameValuePlus
     let allOutput = cmcCompareOutput+toughnessCompareOutput+powerCompareOutput+cOutput+searchTypeOutput+searchNameValueOutput
     console.log(powerValue)
     if(allOutput === ""){
